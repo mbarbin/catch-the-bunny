@@ -57,3 +57,10 @@ let move t =
   done;
   { code = compute_code ~may_be_present; may_be_present }
 ;;
+
+let catch_bunny t =
+  let count = Array.count t.may_be_present ~f:Fn.id in
+  if count = 1
+  then Array.find_mapi t.may_be_present ~f:(fun i b -> Option.some_if b i)
+  else None
+;;

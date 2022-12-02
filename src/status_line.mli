@@ -10,3 +10,4 @@ val length : t -> int
 val may_be_present : t -> index:int -> bool
 val remove : t -> index:int -> t
 val move : t -> t
+val catch_bunny : t -> int option

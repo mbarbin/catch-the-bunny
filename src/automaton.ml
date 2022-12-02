@@ -79,18 +79,25 @@ let sequence t indexes =
   let rec aux acc code = function
     | [] -> List.rev acc
     | hd :: tl ->
-      let updated_status_line =
-        Status_line.remove t.vertices.(code).status_line ~index:hd
-      in
-      let _, bunny_moved =
-        Queue.find t.vertices.(code).edges ~f:(fun (i, _) -> i = hd)
-        |> Option.value_exn ~here:[%here]
-      in
-      aux
-        Step.(
-          Bunny_moved bunny_moved :: Status_line updated_status_line :: Open_box hd :: acc)
-        (Status_line.code bunny_moved)
-        tl
+      let status_line = t.vertices.(code).status_line in
+      let catch_bunny = Status_line.catch_bunny status_line in
+      (match catch_bunny with
+       | Some box when hd = box ->
+         aux Step.(Bunny_was_caught :: Open_box hd :: acc) code []
+       | _ ->
+         let updated_status_line = Status_line.remove status_line ~index:hd in
+         let _, bunny_moved =
+           Queue.find t.vertices.(code).edges ~f:(fun (i, _) -> i = hd)
+           |> Option.value_exn ~here:[%here]
+         in
+         aux
+           Step.(
+             Bunny_moved bunny_moved
+             :: Status_line updated_status_line
+             :: Open_box hd
+             :: acc)
+           (Status_line.code bunny_moved)
+           tl)
   in
   aux [ Status_line all ] max_code indexes
 ;;
