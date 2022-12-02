@@ -101,3 +101,33 @@ let sequence t indexes =
   in
   aux [ Status_line all ] max_code indexes
 ;;
+
+let catch_bunny t =
+  let max_code = Array.length t.vertices - 1 in
+  let sequences = Queue.create () in
+  for i = 0 to Array.length t.vertices - 1 do
+    let status_line = t.vertices.(i).status_line in
+    match Status_line.catch_bunny status_line with
+    | None -> ()
+    | Some index ->
+      (* We do a reverse search from that status_line. Since we know
+         there are solutions with less than 15 moves, we stop the
+         search at that depth. *)
+      let rec search acc visited code =
+        let visited = Set.add visited code in
+        if code = max_code
+        then Queue.enqueue sequences acc
+        else if List.length acc >= 15
+        then ()
+        else (
+          let reverse_edges = t.vertices.(code).reverse_edges in
+          Queue.iter reverse_edges ~f:(fun (j, status_line) ->
+            let code = Status_line.code status_line in
+            if not (Set.mem visited code) then search (j :: acc) visited code))
+      in
+      search [ index ] (Set.empty (module Int)) (Status_line.code status_line)
+  done;
+  List.map (Queue.to_list sequences) ~f:(fun indexes -> List.length indexes, indexes)
+  |> List.sort ~compare:(fun (i, _) (j, _) -> Int.compare i j)
+  |> List.group ~break:(fun (i, _) (j, _) -> i <> j)
+;;

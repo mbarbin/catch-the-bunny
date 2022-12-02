@@ -1,7 +1,7 @@
 open! Core
 
 (** A status line indicates the columns where the bunny may be on that line. *)
-type t [@@deriving hash, sexp_of]
+type t [@@deriving equal, hash, sexp_of]
 
 val code : t -> int
 val create : length:int -> code:int -> t

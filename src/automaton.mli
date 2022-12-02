@@ -19,3 +19,6 @@ module Step : sig
 end
 
 val sequence : t -> int list -> Step.t list
+
+(** Find a sequence that catches the bunny in a minimum number of steps. *)
+val catch_bunny : t -> (int * int list) list list

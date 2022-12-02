@@ -4,7 +4,7 @@ type t =
   { code : int
   ; may_be_present : bool array
   }
-[@@deriving sexp_of]
+[@@deriving equal, sexp_of]
 
 let hash t = t.code
 let hash_fold_t state t = hash_fold_int state t.code
