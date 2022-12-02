@@ -17,12 +17,15 @@ let compute_code ~may_be_present =
 let create ~length ~code =
   let may_be_present = Array.create ~len:length false in
   let rec aux i code =
-    if code > 0 && i < length
+    if code > 0 && i >= 0 && i < length
     then (
       may_be_present.(i) <- code mod 2 = 1;
-      aux (i + 1) (code / 2))
+      aux (i - 1) (code / 2))
   in
-  aux 0 code;
+  aux (length - 1) code;
+  let code' = compute_code ~may_be_present in
+  if code <> code'
+  then raise_s [%sexp "code does not round trip", { code : int; code' : int }];
   { code; may_be_present }
 ;;
 

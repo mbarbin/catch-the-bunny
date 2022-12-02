@@ -63,3 +63,34 @@ let reverse_edges t ~code =
   then []
   else Queue.to_list t.vertices.(code).reverse_edges
 ;;
+
+module Step = struct
+  type t =
+    | Open_box of int
+    | Status_line of Status_line.t
+    | Bunny_moved of Status_line.t
+    | Bunny_was_caught
+  [@@deriving sexp_of]
+end
+
+let sequence t indexes =
+  let max_code = Array.length t.vertices - 1 in
+  let all = t.vertices.(max_code).status_line in
+  let rec aux acc code = function
+    | [] -> List.rev acc
+    | hd :: tl ->
+      let updated_status_line =
+        Status_line.remove t.vertices.(code).status_line ~index:hd
+      in
+      let _, bunny_moved =
+        Queue.find t.vertices.(code).edges ~f:(fun (i, _) -> i = hd)
+        |> Option.value_exn ~here:[%here]
+      in
+      aux
+        Step.(
+          Bunny_moved bunny_moved :: Status_line updated_status_line :: Open_box hd :: acc)
+        (Status_line.code bunny_moved)
+        tl
+  in
+  aux [ Status_line all ] max_code indexes
+;;
