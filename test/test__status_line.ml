@@ -21,3 +21,15 @@ let%expect_test "move" =
   [%expect {| ((code 127) (may_be_present (false true true true true true true true))) |}];
   ()
 ;;
+
+let%expect_test "regression" =
+  let t = Status_line.create ~length:8 ~code:127 in
+  let t = Status_line.remove t ~index:2 in
+  print_s [%sexp (t : Status_line.t)];
+  [%expect
+    {| ((code 222) (may_be_present (true true false true true true true false))) |}];
+  let t = Status_line.move t in
+  print_s [%sexp (t : Status_line.t)];
+  [%expect {| ((code 255) (may_be_present (true true true true true true true true))) |}];
+  ()
+;;
