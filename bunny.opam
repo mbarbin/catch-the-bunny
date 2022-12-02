@@ -1,0 +1,22 @@
+opam-version: "2.0"
+synopsis: "Resolving a small logic puzzle"
+description: "Resolving a small logic puzzle"
+maintainer: "Mathieu Barbin"
+authors: "Mathieu Barbin"
+license: "MIT"
+homepage: "https://github.com/mbarbin/bunny"
+doc: "https://github.com/mbarbin/bunny"
+bug-reports: "https://github.com/mbarbin/bunny/issues"
+depends: [
+  "ocaml" {>= "4.13"}
+  "dune" {>= "2.0.0"}
+  "core" {>= "v0.15"}
+  "core_unix" {>= "v0.15"}
+  "ppx_jane" {>= "v0.15"}
+]
+build: [
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
+  ["dune" "runtest" "-p" name "-j" jobs] {with-test}
+]
+dev-repo: "git+https://github.com/mbarbin/bunny.git"
