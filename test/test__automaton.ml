@@ -284,7 +284,7 @@ let%expect_test "show sequence with size 6" =
   let print_sequence indexes =
     print_s [%sexp (Automaton.sequence t indexes : Automaton.Step.t list)]
   in
-  print_sequence [ 1; 2; 3; 4; 5; 5; 4; 3; 2; 1 ];
+  print_sequence [ 1; 2; 3; 4; 4; 3; 2; 1 ];
   [%expect
     {|
     ((Status_line ((code 63) (may_be_present (true true true true true true))))
@@ -300,16 +300,6 @@ let%expect_test "show sequence with size 6" =
      (Open_box 4)
      (Status_line
       ((code 21) (may_be_present (false true false true false true))))
-     (Bunny_moved
-      ((code 42) (may_be_present (true false true false true false))))
-     (Open_box 5)
-     (Status_line
-      ((code 42) (may_be_present (true false true false true false))))
-     (Bunny_moved
-      ((code 21) (may_be_present (false true false true false true))))
-     (Open_box 5)
-     (Status_line
-      ((code 20) (may_be_present (false true false true false false))))
      (Bunny_moved
       ((code 42) (may_be_present (true false true false true false))))
      (Open_box 4)
