@@ -114,5 +114,14 @@ That specific puzzle was one of the training exercises of the year
 
 ## Motivations
 
-While the puzzle is'nt meant to be solved using a computer program, it
-makes it a fun little project to implement regardless.
+While the puzzle isn't meant to be solved using a computer program,
+it's a fun little project to implement regardless.
+
+## Code documentation
+
+The tip of the main branch is compiled with odoc and published to
+github pages
+[here](https://mbarbin.github.io/catch-the-bunny/bunny/Bunny/index.html)
+
+The code is executed through test files located in the [test/](test/)
+subdirectory.
