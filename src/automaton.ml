@@ -1,7 +1,5 @@
 open! Core
 
-(** Encode the transitions between status lines. *)
-
 module Vertex = struct
   type t =
     { status_line : Status_line.t
@@ -15,22 +13,13 @@ type t = { vertices : Vertex.t array }
 let create ~size =
   let max_code = Int.of_float (2. ** Int.to_float size) - 1 in
   let vertices =
-    Array.create
-      ~len:(max_code + 1)
-      { Vertex.status_line = Status_line.create ~size ~code:max_code
+    Array.init (max_code + 1) ~f:(fun code ->
+      { Vertex.status_line = Status_line.create ~size ~code
       ; edges = Queue.create ()
       ; reverse_edges = Queue.create ()
-      }
+      })
   in
-  for code = 0 to max_code do
-    vertices.(code)
-      <- { Vertex.status_line = Status_line.create ~size ~code
-         ; edges = Queue.create ()
-         ; reverse_edges = Queue.create ()
-         }
-  done;
-  for i = 0 to max_code do
-    let vertex = vertices.(i) in
+  Array.iter vertices ~f:(fun vertex ->
     for j = 0 to pred size do
       let code =
         vertex.status_line
@@ -39,13 +28,11 @@ let create ~size =
         |> Status_line.code
       in
       Queue.enqueue vertex.edges (j, vertices.(code).status_line)
-    done
-  done;
-  for i = 0 to max_code do
-    Queue.iter vertices.(i).edges ~f:(fun (j, status_line) ->
+    done);
+  Array.iter vertices ~f:(fun vertex ->
+    Queue.iter vertex.edges ~f:(fun (j, status_line) ->
       let code = Status_line.code status_line in
-      Queue.enqueue vertices.(code).reverse_edges (j, vertices.(i).status_line))
-  done;
+      Queue.enqueue vertices.(code).reverse_edges (j, vertex.status_line)));
   { vertices }
 ;;
 
@@ -102,8 +89,8 @@ end
 let catch_the_bunny t =
   let max_code = Array.length t.vertices - 1 in
   let sequences = Queue.create () in
-  for i = 0 to Array.length t.vertices - 1 do
-    let status_line = t.vertices.(i).status_line in
+  Array.iter t.vertices ~f:(fun vertex ->
+    let status_line = vertex.status_line in
     match Status_line.catch_the_bunny status_line with
     | None -> ()
     | Some index ->
@@ -120,8 +107,7 @@ let catch_the_bunny t =
             let code = Status_line.code status_line in
             if not (Set.mem visited code) then search (j :: acc) visited code)
       in
-      search [ index ] (Set.empty (module Int)) (Status_line.code status_line)
-  done;
+      search [ index ] (Set.empty (module Int)) (Status_line.code status_line));
   List.map (Queue.to_list sequences) ~f:(fun indexes -> List.length indexes, indexes)
   |> List.sort ~compare:[%compare: int * int list]
   |> List.map ~f:(fun (length, sequence) -> { Solution.length; sequence })
