@@ -15,22 +15,22 @@ let%expect_test "move" =
   let t = Status_line.create ~length:8 ~code:255 in
   let t = Status_line.remove t ~index:1 in
   print_s [%sexp (t : Status_line.t)];
-  [%expect {| ((code 191) (may_be_present (true false true true true true true true))) |}];
+  [%expect {| ((code 191) (may_be_located (true false true true true true true true))) |}];
   let t = Status_line.move t in
   print_s [%sexp (t : Status_line.t)];
-  [%expect {| ((code 127) (may_be_present (false true true true true true true true))) |}];
+  [%expect {| ((code 127) (may_be_located (false true true true true true true true))) |}];
   ()
 ;;
 
 let%expect_test "regression" =
   let t = Status_line.create ~length:8 ~code:127 in
   print_s [%sexp (t : Status_line.t)];
-  [%expect {| ((code 127) (may_be_present (false true true true true true true true))) |}];
+  [%expect {| ((code 127) (may_be_located (false true true true true true true true))) |}];
   let t = Status_line.remove t ~index:2 in
   print_s [%sexp (t : Status_line.t)];
-  [%expect {| ((code 95) (may_be_present (false true false true true true true true))) |}];
+  [%expect {| ((code 95) (may_be_located (false true false true true true true true))) |}];
   let t = Status_line.move t in
   print_s [%sexp (t : Status_line.t)];
-  [%expect {| ((code 191) (may_be_present (true false true true true true true true))) |}];
+  [%expect {| ((code 191) (may_be_located (true false true true true true true true))) |}];
   ()
 ;;
