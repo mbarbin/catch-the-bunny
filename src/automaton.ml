@@ -3,8 +3,8 @@ open! Core
 module Vertex = struct
   type t =
     { status_line : Status_line.t
-    ; edges : (int * Status_line.t) Queue.t
-    ; reverse_edges : (int * Status_line.t) Queue.t
+    ; edges : (int * Status_line.t) list
+    ; reverse_edges : (int * Status_line.t) list
     }
 end
 
@@ -12,34 +12,55 @@ type t = { vertices : Vertex.t array }
 
 let create ~size =
   let max_code = Int.of_float (2. ** Int.to_float size) - 1 in
-  let vertices =
-    Array.init (max_code + 1) ~f:(fun code ->
-      { Vertex.status_line = Status_line.create ~size ~code
-      ; edges = Queue.create ()
-      ; reverse_edges = Queue.create ()
-      })
+  let status_lines =
+    Array.init (max_code + 1) ~f:(fun code -> Status_line.create ~size ~code)
   in
-  Array.iter vertices ~f:(fun vertex ->
-    for j = 0 to pred size do
-      let code =
-        vertex.status_line
-        |> Status_line.remove ~index:j
-        |> Status_line.move
-        |> Status_line.code
+  let edges =
+    Array.map status_lines ~f:(fun status_line ->
+      List.init size ~f:(fun j ->
+        let code =
+          status_line
+          |> Status_line.remove ~index:j
+          |> Status_line.move
+          |> Status_line.code
+        in
+        j, status_lines.(code)))
+  in
+  let reverse_edges =
+    let reverse_edges = Array.init (max_code + 1) ~f:(fun _ -> Queue.create ()) in
+    Array.iteri edges ~f:(fun i edges ->
+      let origin = status_lines.(i) in
+      List.iter edges ~f:(fun (j, status_line) ->
+        let code = Status_line.code status_line in
+        Queue.enqueue reverse_edges.(code) (j, origin)));
+    reverse_edges
+  in
+  let vertices =
+    Array.mapi status_lines ~f:(fun code status_line ->
+      let reverse_edges =
+        reverse_edges.(code)
+        |> Queue.to_list
+        |> List.sort ~compare:[%compare: int * Status_line.t]
       in
-      Queue.enqueue vertex.edges (j, vertices.(code).status_line)
-    done);
-  Array.iter vertices ~f:(fun vertex ->
-    Queue.iter vertex.edges ~f:(fun (j, status_line) ->
-      let code = Status_line.code status_line in
-      Queue.enqueue vertices.(code).reverse_edges (j, vertex.status_line)));
+      { Vertex.status_line; edges = edges.(code); reverse_edges })
+  in
   { vertices }
 ;;
 
+let check_code_exn t ~code =
+  let length = Array.length t.vertices in
+  if code < 0 || code >= length
+  then raise_s [%sexp "code out of bounds", { code : int; length : int }]
+;;
+
 let edges t ~code =
-  if code < 0 || code >= Array.length t.vertices
-  then []
-  else Queue.to_list t.vertices.(code).edges
+  check_code_exn t ~code;
+  t.vertices.(code).edges
+;;
+
+let reverse_edges t ~code =
+  check_code_exn t ~code;
+  t.vertices.(code).reverse_edges
 ;;
 
 module Step = struct
@@ -63,7 +84,7 @@ let execute_sequence t ~sequence =
       else (
         let updated_status_line = Status_line.remove status_line ~index:hd in
         let _, bunny_moved =
-          Queue.find t.vertices.(code).edges ~f:(fun (i, _) -> i = hd)
+          List.find t.vertices.(code).edges ~f:(fun (i, _) -> i = hd)
           |> Option.value_exn ~here:[%here]
         in
         aux
@@ -103,7 +124,7 @@ let catch_the_bunny t =
         then Queue.enqueue sequences acc
         else if List.length acc < 15
         then
-          Queue.iter t.vertices.(code).reverse_edges ~f:(fun (j, status_line) ->
+          List.iter t.vertices.(code).reverse_edges ~f:(fun (j, status_line) ->
             let code = Status_line.code status_line in
             if not (Set.mem visited code) then search (j :: acc) visited code)
       in

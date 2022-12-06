@@ -6,7 +6,7 @@ open! Core
    down to a single column, so that we can catch the bunny at that
    location. *)
 
-type t [@@deriving equal, hash, sexp_of]
+type t [@@deriving compare, equal, sexp_of]
 
 (** Status lines are encoded with an int between 0 and (2**size - 1). *)
 val code : t -> int

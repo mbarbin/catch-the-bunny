@@ -1,13 +1,13 @@
 open! Core
 open! Bunny
 
-let%expect_test "edges" =
+let%expect_test "edges size 8" =
   let t = Automaton.create ~size:8 in
-  let print_code ~code =
+  let print_edges ~code =
     let edges = Automaton.edges t ~code in
     print_s [%sexp (edges : (int * Status_line.t) list)]
   in
-  print_code ~code:255;
+  print_edges ~code:255;
   [%expect
     {|
     ((0 ((code 255) (may_be_located (true true true true true true true true))))
@@ -18,7 +18,7 @@ let%expect_test "edges" =
      (5 ((code 255) (may_be_located (true true true true true true true true))))
      (6 ((code 254) (may_be_located (true true true true true true true false))))
      (7 ((code 255) (may_be_located (true true true true true true true true))))) |}];
-  print_code ~code:127;
+  print_edges ~code:127;
   [%expect
     {|
     ((0 ((code 255) (may_be_located (true true true true true true true true))))
@@ -29,7 +29,7 @@ let%expect_test "edges" =
      (5 ((code 255) (may_be_located (true true true true true true true true))))
      (6 ((code 254) (may_be_located (true true true true true true true false))))
      (7 ((code 255) (may_be_located (true true true true true true true true))))) |}];
-  print_code ~code:191;
+  print_edges ~code:191;
   [%expect
     {|
     ((0 ((code 127) (may_be_located (false true true true true true true true))))
@@ -44,7 +44,7 @@ let%expect_test "edges" =
   ()
 ;;
 
-let%expect_test "edges" =
+let%expect_test "sequence size 8" =
   let t = Automaton.create ~size:8 in
   let print_sequence sequence =
     print_s [%sexp (Automaton.execute_sequence t ~sequence : Automaton.Step.t list)]
@@ -122,7 +122,7 @@ let%expect_test "edges" =
   ()
 ;;
 
-let%expect_test "catch it" =
+let%expect_test "solve size 8" =
   let t = Automaton.create ~size:8 in
   let solutions = Automaton.catch_the_bunny t in
   print_s [%sexp (solutions : Automaton.Solution.t list)];
@@ -218,6 +218,76 @@ let%expect_test "catch it" =
      ((length 15) (sequence (6 5 1 2 3 4 5 6 7 1 2 3 4 5 6)))
      ((length 15) (sequence (6 5 4 1 2 3 4 5 6 6 5 4 3 2 1)))
      ((length 15) (sequence (6 5 4 3 2 1 1 2 3 6 5 4 3 2 1)))) |}];
+  ()
+;;
+
+let%expect_test "edges size 6" =
+  let t = Automaton.create ~size:6 in
+  let print_edges ~code =
+    let edges = Automaton.edges t ~code in
+    print_s [%sexp (edges : (int * Status_line.t) list)]
+  in
+  let print_reverse_edges ~code =
+    let reverse_edges = Automaton.reverse_edges t ~code in
+    print_s [%sexp (reverse_edges : (int * Status_line.t) list)]
+  in
+  print_edges ~code:63;
+  [%expect
+    {|
+    ((0 ((code 63) (may_be_located (true true true true true true))))
+     (1 ((code 31) (may_be_located (false true true true true true))))
+     (2 ((code 63) (may_be_located (true true true true true true))))
+     (3 ((code 63) (may_be_located (true true true true true true))))
+     (4 ((code 62) (may_be_located (true true true true true false))))
+     (5 ((code 63) (may_be_located (true true true true true true))))) |}];
+  print_edges ~code:31;
+  [%expect
+    {|
+    ((0 ((code 63) (may_be_located (true true true true true true))))
+     (1 ((code 31) (may_be_located (false true true true true true))))
+     (2 ((code 47) (may_be_located (true false true true true true))))
+     (3 ((code 63) (may_be_located (true true true true true true))))
+     (4 ((code 62) (may_be_located (true true true true true false))))
+     (5 ((code 63) (may_be_located (true true true true true true))))) |}];
+  print_edges ~code:47;
+  [%expect
+    {|
+    ((0 ((code 31) (may_be_located (false true true true true true))))
+     (1 ((code 31) (may_be_located (false true true true true true))))
+     (2 ((code 31) (may_be_located (false true true true true true))))
+     (3 ((code 23) (may_be_located (false true false true true true))))
+     (4 ((code 30) (may_be_located (false true true true true false))))
+     (5 ((code 31) (may_be_located (false true true true true true))))) |}];
+  print_reverse_edges ~code:16;
+  [%expect
+    {|
+    ((1 ((code 32) (may_be_located (true false false false false false))))
+     (1 ((code 48) (may_be_located (true true false false false false))))
+     (2 ((code 32) (may_be_located (true false false false false false))))
+     (2 ((code 40) (may_be_located (true false true false false false))))
+     (3 ((code 32) (may_be_located (true false false false false false))))
+     (3 ((code 36) (may_be_located (true false false true false false))))
+     (4 ((code 32) (may_be_located (true false false false false false))))
+     (4 ((code 34) (may_be_located (true false false false true false))))
+     (5 ((code 32) (may_be_located (true false false false false false))))
+     (5 ((code 33) (may_be_located (true false false false false true))))) |}];
+  print_reverse_edges ~code:32;
+  [%expect {| () |}];
+  print_reverse_edges ~code:48;
+  [%expect {| () |}];
+  print_reverse_edges ~code:40;
+  [%expect
+    {|
+    ((0 ((code 16) (may_be_located (false true false false false false))))
+     (0 ((code 48) (may_be_located (true true false false false false))))
+     (2 ((code 16) (may_be_located (false true false false false false))))
+     (2 ((code 24) (may_be_located (false true true false false false))))
+     (3 ((code 16) (may_be_located (false true false false false false))))
+     (3 ((code 20) (may_be_located (false true false true false false))))
+     (4 ((code 16) (may_be_located (false true false false false false))))
+     (4 ((code 18) (may_be_located (false true false false true false))))
+     (5 ((code 16) (may_be_located (false true false false false false))))
+     (5 ((code 17) (may_be_located (false true false false false true))))) |}];
   ()
 ;;
 
@@ -422,7 +492,7 @@ let%expect_test "solve size 6" =
   ()
 ;;
 
-let%expect_test "show sequence with size 6" =
+let%expect_test "sequence size 6" =
   let t = Automaton.create ~size:6 in
   let print_sequence sequence =
     print_s [%sexp (Automaton.execute_sequence t ~sequence : Automaton.Step.t list)]

@@ -4,10 +4,8 @@ type t =
   { code : int
   ; may_be_located : bool array
   }
-[@@deriving equal, sexp_of]
+[@@deriving compare, equal, sexp_of]
 
-let hash t = t.code
-let hash_fold_t state t = hash_fold_int state t.code
 let code t = t.code
 
 let compute_code ~may_be_located =

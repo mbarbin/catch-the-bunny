@@ -28,6 +28,9 @@ val create : size:int -> t
    targetting vertice. *)
 val edges : t -> code:int -> (int * Status_line.t) list
 
+(** Return the edges that are targetting the vertice with the given code. *)
+val reverse_edges : t -> code:int -> (int * Status_line.t) list
+
 module Step : sig
   (** Human readable steps that are happening as the game goes on. *)
   type t =
