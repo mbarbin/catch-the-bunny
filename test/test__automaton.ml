@@ -2,7 +2,7 @@ open! Core
 open! Bunny
 
 let%expect_test "edges" =
-  let t = Automaton.create ~length:8 in
+  let t = Automaton.create ~size:8 in
   let print_code ~code =
     let edges = Automaton.edges t ~code in
     print_s [%sexp (edges : (int * Status_line.t) list)]
@@ -45,7 +45,7 @@ let%expect_test "edges" =
 ;;
 
 let%expect_test "edges" =
-  let t = Automaton.create ~length:8 in
+  let t = Automaton.create ~size:8 in
   let print_sequence sequence =
     print_s [%sexp (Automaton.execute_sequence t ~sequence : Automaton.Step.t list)]
   in
@@ -123,7 +123,7 @@ let%expect_test "edges" =
 ;;
 
 let%expect_test "catch it" =
-  let t = Automaton.create ~length:8 in
+  let t = Automaton.create ~size:8 in
   let solutions = Automaton.catch_the_bunny t in
   print_s [%sexp (solutions : Automaton.Solution.t list)];
   [%expect
@@ -222,7 +222,7 @@ let%expect_test "catch it" =
 ;;
 
 let%expect_test "solve size 6" =
-  let t = Automaton.create ~length:6 in
+  let t = Automaton.create ~size:6 in
   let solutions = Automaton.catch_the_bunny t in
   print_s [%sexp (solutions : Automaton.Solution.t list)];
   [%expect
@@ -423,7 +423,7 @@ let%expect_test "solve size 6" =
 ;;
 
 let%expect_test "show sequence with size 6" =
-  let t = Automaton.create ~length:6 in
+  let t = Automaton.create ~size:6 in
   let print_sequence sequence =
     print_s [%sexp (Automaton.execute_sequence t ~sequence : Automaton.Step.t list)]
   in

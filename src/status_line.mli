@@ -8,12 +8,12 @@ open! Core
 
 type t [@@deriving equal, hash, sexp_of]
 
-(** Status lines are encoded with an int between 0 and (2**length - 1). *)
+(** Status lines are encoded with an int between 0 and (2**size - 1). *)
 val code : t -> int
 
-(** Create a new status line with the given length and code. Raises
-   when called with a code that exceeds the code range. *)
-val create : length:int -> code:int -> t
+(** Create a new status line with the given size and code. Raises when
+   called with a code that exceeds the code range. *)
+val create : size:int -> code:int -> t
 
 (** Update the information known upon witnessing that the bunny is not
    located at a given box that was just opened. *)

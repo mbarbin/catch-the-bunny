@@ -12,26 +12,26 @@ end
 
 type t = { vertices : Vertex.t array }
 
-let create ~length =
-  let max_code = Int.of_float (2. ** Int.to_float length) - 1 in
+let create ~size =
+  let max_code = Int.of_float (2. ** Int.to_float size) - 1 in
   let vertices =
     Array.create
       ~len:(max_code + 1)
-      { Vertex.status_line = Status_line.create ~length ~code:max_code
+      { Vertex.status_line = Status_line.create ~size ~code:max_code
       ; edges = Queue.create ()
       ; reverse_edges = Queue.create ()
       }
   in
   for code = 0 to max_code do
     vertices.(code)
-      <- { Vertex.status_line = Status_line.create ~length ~code
+      <- { Vertex.status_line = Status_line.create ~size ~code
          ; edges = Queue.create ()
          ; reverse_edges = Queue.create ()
          }
   done;
   for i = 0 to max_code do
     let vertex = vertices.(i) in
-    for j = 0 to pred length do
+    for j = 0 to pred size do
       let code =
         vertex.status_line
         |> Status_line.remove ~index:j

@@ -20,8 +20,8 @@ open! Core
 type t
 
 (** Compute the complete automaton with its vertices and edges for a
-   given length. *)
-val create : length:int -> t
+   given size. *)
+val create : size:int -> t
 
 (** Returns the edges that are originating from the vertice with the
    given code. For each edge we return its label along with its
