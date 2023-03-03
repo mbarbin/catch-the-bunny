@@ -56,7 +56,7 @@ For example, if the bunny is in box number 1:
 | X |   |   |   | There's nowhere to go to the left !
 +---+---+---+---+
 ```
-after it moves it will necessarily be in box number 1:
+after it moves it will necessarily be in box number 2:
 ```
 +---+---+---+---+
 |   | X |   |   | The bunny had to move to the right.
