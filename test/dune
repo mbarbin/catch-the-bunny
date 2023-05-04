@@ -1,7 +1,7 @@
 (library
  (name bunny_test)
  (flags -w +a-4-40-41-42-44-66 -warn-error +a)
- (libraries core bunny)
+ (libraries core bunny expect_test_helpers_core)
  (inline_tests)
  (preprocess
   (pps ppx_jane ppx_js_style -check-doc-comments)))

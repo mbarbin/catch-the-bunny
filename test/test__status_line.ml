@@ -8,7 +8,26 @@ let%expect_test "code" =
     if code <> code'
     then raise_s [%sexp "code does not round trip", { code : int; code' : int }]
   done;
-  [%expect {| |}]
+  [%expect {| |}];
+  Expect_test_helpers_core.require_does_raise [%here] (fun () ->
+    ignore (Status_line.create ~size:(-1) ~code:0 : Status_line.t));
+  [%expect {| (Invalid_argument "Array.create ~len:-1: invalid length") |}];
+  Expect_test_helpers_core.require_does_not_raise [%here] (fun () ->
+    ignore (Status_line.create ~size:0 ~code:0 : Status_line.t));
+  [%expect {| |}];
+  Expect_test_helpers_core.require_does_raise [%here] (fun () ->
+    ignore (Status_line.create ~size:1 ~code:(-1) : Status_line.t));
+  [%expect {|
+    ("invalid negative code" (
+      (size 1)
+      (code -1))) |}];
+  Expect_test_helpers_core.require_does_raise [%here] (fun () ->
+    ignore (Status_line.create ~size:1 ~code:3 : Status_line.t));
+  [%expect {|
+    ("code out of bounds" (
+      (size 1)
+      (code 3))) |}];
+  ()
 ;;
 
 let%expect_test "move" =
