@@ -9,9 +9,11 @@ doc: "https://github.com/mbarbin/bunny"
 bug-reports: "https://github.com/mbarbin/bunny/issues"
 depends: [
   "ocaml" {>= "4.13"}
-  "dune" {>= "2.0.0"}
+  "dune" {>= "3.0"}
+  "bisect_ppx" {dev & >= "2.8"}
   "core" {>= "v0.15"}
   "ppx_jane" {>= "v0.15"}
+  "ppx_js_style" {>= "v0.15"}
 ]
 build: [
   ["dune" "subst"] {pinned}
