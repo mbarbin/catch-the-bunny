@@ -53,3 +53,25 @@ let%expect_test "regression" =
   [%expect {| ((code 191) (may_be_located (true false true true true true true true))) |}];
   ()
 ;;
+
+let%expect_test "remove" =
+  let t = Status_line.create ~size:8 ~code:127 in
+  print_s [%sexp (t : Status_line.t)];
+  [%expect {| ((code 127) (may_be_located (false true true true true true true true))) |}];
+  let t = Status_line.remove t ~index:2 in
+  print_s [%sexp (t : Status_line.t)];
+  [%expect {| ((code 95) (may_be_located (false true false true true true true true))) |}];
+  Expect_test_helpers_core.require_does_raise [%here] (fun () ->
+    ignore (Status_line.remove t ~index:(-1) : Status_line.t));
+  [%expect {|
+    ("index out of bounds" (
+      (size  8)
+      (index -1))) |}];
+  Expect_test_helpers_core.require_does_raise [%here] (fun () ->
+    ignore (Status_line.remove t ~index:8 : Status_line.t));
+  [%expect {|
+        ("index out of bounds" (
+          (size  8)
+          (index 8))) |}];
+  ()
+;;
