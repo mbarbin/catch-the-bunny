@@ -69,7 +69,8 @@ let%expect_test "remove" =
       (index -1))) |}];
   Expect_test_helpers_core.require_does_raise [%here] (fun () ->
     ignore (Status_line.remove t ~index:8 : Status_line.t));
-  [%expect {|
+  [%expect
+    {|
         ("index out of bounds" (
           (size  8)
           (index 8))) |}];
