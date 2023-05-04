@@ -22,8 +22,8 @@ let create ~size ~code =
       aux (i - 1) (code / 2))
     else code
   in
-  let remainer = aux (size - 1) code in
-  if remainer <> 0 then raise_s [%sexp "code out of bounds", { size : int; code : int }];
+  let remainder = aux (size - 1) code in
+  if remainder <> 0 then raise_s [%sexp "code out of bounds", { size : int; code : int }];
   let code' = compute_code ~may_be_located in
   if code <> code'
   then raise_s [%sexp "code does not round trip", { code : int; code' : int }];

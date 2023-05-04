@@ -23,12 +23,12 @@ type t
    given size. *)
 val create : size:int -> t
 
-(** Returns the edges that are originating from the vertice with the
+(** Returns the edges that are originating from the vertex with the
    given code. For each edge we return its label along with its
-   targetting vertice. *)
+   targeting vertex. *)
 val edges : t -> code:int -> (int * Status_line.t) list
 
-(** Return the edges that are targetting the vertice with the given code. *)
+(** Return the edges that are targeting the vertex with the given code. *)
 val reverse_edges : t -> code:int -> (int * Status_line.t) list
 
 module Step : sig
