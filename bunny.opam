@@ -11,10 +11,11 @@ depends: [
   "ocaml" {>= "5.0"}
   "dune" {>= "3.11"}
   "bisect_ppx" {dev & >= "2.8"}
-  "core" {>= "v0.16"}
+  "base" {>= "v0.16"}
   "expect_test_helpers_core" {with-test & >= "v0.16"}
   "ppx_jane" {>= "v0.16"}
   "ppx_js_style" {>= "v0.16"}
+  "stdio" {with-test >= "v0.16"}
 ]
 build: [
   ["dune" "subst"] {pinned}

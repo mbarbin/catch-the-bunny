@@ -1,4 +1,4 @@
-open! Core
+open! Base
 
 module Vertex = struct
   type t =
@@ -11,7 +11,7 @@ end
 type t = { vertices : Vertex.t array }
 
 let create ~size =
-  let max_code = Int.of_float (2. ** Int.to_float size) - 1 in
+  let max_code = Int.pow 2 size - 1 in
   let status_lines =
     Array.init (max_code + 1) ~f:(fun code -> Status_line.create ~size ~code)
   in

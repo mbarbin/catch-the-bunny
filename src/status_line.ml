@@ -1,4 +1,4 @@
-open! Core
+open! Base
 
 type t =
   { code : int
@@ -18,7 +18,7 @@ let create ~size ~code =
   let rec aux i code =
     if i >= 0 && i < size
     then (
-      may_be_located.(i) <- code mod 2 = 1;
+      may_be_located.(i) <- code % 2 = 1;
       aux (i - 1) (code / 2))
     else code
   in
@@ -44,7 +44,7 @@ let remove t ~index =
 let move t =
   let size = size t in
   let may_be_located = Array.create ~len:size false in
-  for i = 0 to pred size do
+  for i = 0 to Int.pred size do
     if t.may_be_located.(i)
     then
       Array.iter [| -1; 1 |] ~f:(fun j ->

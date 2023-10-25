@@ -2,7 +2,7 @@
  (name bunny)
  (public_name bunny)
  (flags -w +a-4-40-41-42-44-66 -warn-error +a)
- (libraries core)
+ (libraries base)
  (instrumentation
   (backend bisect_ppx))
  (preprocess

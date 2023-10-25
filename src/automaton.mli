@@ -1,4 +1,4 @@
-open! Core
+open! Base
 
 (** To solve the game, we create a big automaton that encodes the transitions
     between all possible status lines. Once that automaton is computed, the
