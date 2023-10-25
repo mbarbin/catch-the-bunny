@@ -9,7 +9,7 @@ doc: "https://github.com/mbarbin/bunny"
 bug-reports: "https://github.com/mbarbin/bunny/issues"
 depends: [
   "ocaml" {>= "5.0"}
-  "dune" {>= "3.0"}
+  "dune" {>= "3.11"}
   "bisect_ppx" {dev & >= "2.8"}
   "core" {>= "v0.15"}
   "expect_test_helpers_core" {with-test & >= "v0.15"}
