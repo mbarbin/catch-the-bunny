@@ -1,7 +1,5 @@
 open! Bunny
 
-let () = sexp_style := Sexp_style.To_string_hum
-
 let%expect_test "edges size 8" =
   let t = Automaton.create ~size:8 in
   let print_edges ~code =
@@ -39,8 +37,7 @@ let%expect_test "edges size 8" =
      (3 ((code 95) (may_be_located (false true false true true true true true))))
      (4 ((code 127) (may_be_located (false true true true true true true true))))
      (5 ((code 127) (may_be_located (false true true true true true true true))))
-     (6
-      ((code 126) (may_be_located (false true true true true true true false))))
+     (6 ((code 126) (may_be_located (false true true true true true true false))))
      (7 ((code 127) (may_be_located (false true true true true true true true))))) |}];
   ()
 ;;
@@ -53,73 +50,70 @@ let%expect_test "sequence size 8" =
   print_sequence [ 1; 2; 3; 4; 5; 6; 6; 5; 4; 3; 2; 1 ];
   [%expect
     {|
-    ((Status_line
-      ((code 255) (may_be_located (true true true true true true true true))))
+    ((Status_line (
+       (code 255) (may_be_located (true true true true true true true true))))
      (Open_box 1)
-     (Status_line
-      ((code 191) (may_be_located (true false true true true true true true))))
-     (Bunny_moved
-      ((code 127) (may_be_located (false true true true true true true true))))
+     (Status_line (
+       (code 191) (may_be_located (true false true true true true true true))))
+     (Bunny_moved (
+       (code 127) (may_be_located (false true true true true true true true))))
      (Open_box 2)
-     (Status_line
-      ((code 95) (may_be_located (false true false true true true true true))))
-     (Bunny_moved
-      ((code 191) (may_be_located (true false true true true true true true))))
+     (Status_line (
+       (code 95) (may_be_located (false true false true true true true true))))
+     (Bunny_moved (
+       (code 191) (may_be_located (true false true true true true true true))))
      (Open_box 3)
-     (Status_line
-      ((code 175) (may_be_located (true false true false true true true true))))
-     (Bunny_moved
-      ((code 95) (may_be_located (false true false true true true true true))))
+     (Status_line (
+       (code 175) (may_be_located (true false true false true true true true))))
+     (Bunny_moved (
+       (code 95) (may_be_located (false true false true true true true true))))
      (Open_box 4)
-     (Status_line
-      ((code 87) (may_be_located (false true false true false true true true))))
-     (Bunny_moved
-      ((code 175) (may_be_located (true false true false true true true true))))
+     (Status_line (
+       (code 87) (may_be_located (false true false true false true true true))))
+     (Bunny_moved (
+       (code 175) (may_be_located (true false true false true true true true))))
      (Open_box 5)
-     (Status_line
-      ((code 171) (may_be_located (true false true false true false true true))))
-     (Bunny_moved
-      ((code 87) (may_be_located (false true false true false true true true))))
+     (Status_line (
+       (code 171) (may_be_located (true false true false true false true true))))
+     (Bunny_moved (
+       (code 87) (may_be_located (false true false true false true true true))))
      (Open_box 6)
-     (Status_line
-      ((code 85) (may_be_located (false true false true false true false true))))
-     (Bunny_moved
-      ((code 170) (may_be_located (true false true false true false true false))))
+     (Status_line (
+       (code 85) (may_be_located (false true false true false true false true))))
+     (Bunny_moved (
+       (code 170) (may_be_located (true false true false true false true false))))
      (Open_box 6)
-     (Status_line
-      ((code 168)
-       (may_be_located (true false true false true false false false))))
-     (Bunny_moved
-      ((code 84) (may_be_located (false true false true false true false false))))
+     (Status_line (
+       (code 168) (may_be_located (true false true false true false false false))))
+     (Bunny_moved (
+       (code 84) (may_be_located (false true false true false true false false))))
      (Open_box 5)
-     (Status_line
-      ((code 80)
-       (may_be_located (false true false true false false false false))))
-     (Bunny_moved
-      ((code 168)
-       (may_be_located (true false true false true false false false))))
+     (Status_line (
+       (code 80) (may_be_located (false true false true false false false false))))
+     (Bunny_moved (
+       (code 168) (may_be_located (true false true false true false false false))))
      (Open_box 4)
-     (Status_line
-      ((code 160)
+     (Status_line (
+       (code 160)
        (may_be_located (true false true false false false false false))))
-     (Bunny_moved
-      ((code 80)
-       (may_be_located (false true false true false false false false))))
+     (Bunny_moved (
+       (code 80) (may_be_located (false true false true false false false false))))
      (Open_box 3)
-     (Status_line
-      ((code 64)
+     (Status_line (
+       (code 64)
        (may_be_located (false true false false false false false false))))
-     (Bunny_moved
-      ((code 160)
+     (Bunny_moved (
+       (code 160)
        (may_be_located (true false true false false false false false))))
      (Open_box 2)
-     (Status_line
-      ((code 128)
+     (Status_line (
+       (code 128)
        (may_be_located (true false false false false false false false))))
-     (Bunny_moved
-      ((code 64)
+     (Bunny_moved (
+       (code 64)
        (may_be_located (false true false false false false false false))))
-     (Open_box 1) Bunny_was_caught) |}];
+     (Open_box 1)
+     Bunny_was_caught) |}];
   ()
 ;;
 
@@ -512,26 +506,22 @@ let%expect_test "sequence size 6" =
      (Status_line ((code 43) (may_be_located (true false true false true true))))
      (Bunny_moved ((code 23) (may_be_located (false true false true true true))))
      (Open_box 4)
-     (Status_line
-      ((code 21) (may_be_located (false true false true false true))))
-     (Bunny_moved
-      ((code 42) (may_be_located (true false true false true false))))
+     (Status_line ((code 21) (may_be_located (false true false true false true))))
+     (Bunny_moved ((code 42) (may_be_located (true false true false true false))))
      (Open_box 4)
-     (Status_line
-      ((code 40) (may_be_located (true false true false false false))))
-     (Bunny_moved
-      ((code 20) (may_be_located (false true false true false false))))
+     (Status_line ((code 40) (may_be_located (true false true false false false))))
+     (Bunny_moved ((code 20) (may_be_located (false true false true false false))))
      (Open_box 3)
-     (Status_line
-      ((code 16) (may_be_located (false true false false false false))))
-     (Bunny_moved
-      ((code 40) (may_be_located (true false true false false false))))
+     (Status_line (
+       (code 16) (may_be_located (false true false false false false))))
+     (Bunny_moved ((code 40) (may_be_located (true false true false false false))))
      (Open_box 2)
-     (Status_line
-      ((code 32) (may_be_located (true false false false false false))))
-     (Bunny_moved
-      ((code 16) (may_be_located (false true false false false false))))
-     (Open_box 1) Bunny_was_caught) |}];
+     (Status_line (
+       (code 32) (may_be_located (true false false false false false))))
+     (Bunny_moved (
+       (code 16) (may_be_located (false true false false false false))))
+     (Open_box 1)
+     Bunny_was_caught) |}];
   ()
 ;;
 
@@ -548,8 +538,14 @@ let%expect_test "edges size 3" =
      (1 ((code 0) (may_be_located (false false false))))
      (2 ((code 0) (may_be_located (false false false))))) |}];
   Expect_test_helpers_base.require_does_raise [%here] (fun () -> print_edges ~code:(-1));
-  [%expect {| ("code out of bounds" ((code -1) (length 8))) |}];
+  [%expect {|
+    ("code out of bounds" (
+      (code   -1)
+      (length 8))) |}];
   Expect_test_helpers_base.require_does_raise [%here] (fun () -> print_edges ~code:255);
-  [%expect {| ("code out of bounds" ((code 255) (length 8))) |}];
+  [%expect {|
+    ("code out of bounds" (
+      (code   255)
+      (length 8))) |}];
   ()
 ;;
