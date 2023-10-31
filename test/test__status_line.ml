@@ -1,5 +1,3 @@
-open! Bunny
-
 let%expect_test "code" =
   for code = 0 to 255 do
     let status_line = Status_line.create ~size:8 ~code in

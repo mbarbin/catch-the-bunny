@@ -1,5 +1,3 @@
-open! Bunny
-
 let%expect_test "edges size 8" =
   let t = Automaton.create ~size:8 in
   let print_edges ~code =

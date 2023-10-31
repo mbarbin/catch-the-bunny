@@ -10,7 +10,9 @@
   -open
   Stdio
   -open
-  Expect_test_helpers_base)
+  Expect_test_helpers_base
+  -open
+  Bunny)
  (libraries
   base
   bunny
