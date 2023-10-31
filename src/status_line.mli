@@ -1,5 +1,3 @@
-open! Base
-
 (** A status line indicates the columns where the bunny may be located on that
     line. As the game goes on and more information is gathered, we're hoping
     that the set of possible locations will be decreased down to a single

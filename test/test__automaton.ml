@@ -1,6 +1,6 @@
-open! Base
-open! Stdio
 open! Bunny
+
+let () = sexp_style := Sexp_style.To_string_hum
 
 let%expect_test "edges size 8" =
   let t = Automaton.create ~size:8 in
@@ -548,15 +548,8 @@ let%expect_test "edges size 3" =
      (1 ((code 0) (may_be_located (false false false))))
      (2 ((code 0) (may_be_located (false false false))))) |}];
   Expect_test_helpers_base.require_does_raise [%here] (fun () -> print_edges ~code:(-1));
-  [%expect {|
-    ("code out of bounds" (
-      (code   -1)
-      (length 8))) |}];
+  [%expect {| ("code out of bounds" ((code -1) (length 8))) |}];
   Expect_test_helpers_base.require_does_raise [%here] (fun () -> print_edges ~code:255);
-  [%expect
-    {|
-        ("code out of bounds" (
-          (code   255)
-          (length 8))) |}];
+  [%expect {| ("code out of bounds" ((code 255) (length 8))) |}];
   ()
 ;;

@@ -1,5 +1,3 @@
-open! Base
-
 type t =
   { code : int
   ; may_be_located : bool array

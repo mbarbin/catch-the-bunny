@@ -1,5 +1,3 @@
-open! Base
-
 module Vertex = struct
   type t =
     { status_line : Status_line.t

@@ -1,5 +1,3 @@
-open! Base
-open! Stdio
 open! Bunny
 
 let%expect_test "code" =
