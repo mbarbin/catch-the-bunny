@@ -8,7 +8,7 @@ homepage: "https://github.com/mbarbin/bunny"
 doc: "https://github.com/mbarbin/bunny"
 bug-reports: "https://github.com/mbarbin/bunny/issues"
 depends: [
-  "ocaml" {>= "5.0"}
+  "ocaml" {>= "5.1"}
   "dune" {>= "3.11"}
   "bisect_ppx" {dev & >= "2.8"}
   "base" {>= "v0.16"}
