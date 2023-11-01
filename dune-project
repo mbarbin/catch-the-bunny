@@ -1,3 +1,3 @@
 (lang dune 3.11)
 
-(name bunny)
+(name catch-the-bunny)

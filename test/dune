@@ -1,5 +1,5 @@
 (library
- (name bunny_test)
+ (name catch_the_bunny_test)
  (flags
   -w
   +a-4-40-41-42-44-66
@@ -12,10 +12,10 @@
   -open
   Expect_test_helpers_base
   -open
-  Bunny)
+  Catch_the_bunny)
  (libraries
   base
-  bunny
+  catch_the_bunny
   expect_test_helpers_core.expect_test_helpers_base
   stdio)
  (inline_tests)
