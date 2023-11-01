@@ -4,9 +4,9 @@ description: "Resolving a small logic puzzle"
 maintainer: "Mathieu Barbin"
 authors: "Mathieu Barbin"
 license: "MIT"
-homepage: "https://github.com/mbarbin/bunny"
-doc: "https://github.com/mbarbin/bunny"
-bug-reports: "https://github.com/mbarbin/bunny/issues"
+homepage: "https://github.com/mbarbin/catch-the-bunny"
+doc: "https://mbarbin.github.io/catch-the-bunny/"
+bug-reports: "https://github.com/mbarbin/catch-the-bunny/issues"
 depends: [
   "ocaml" {>= "5.1"}
   "dune" {>= "3.11"}
@@ -22,4 +22,4 @@ build: [
   ["dune" "build" "-p" name "-j" jobs]
   ["dune" "runtest" "-p" name "-j" jobs] {with-test}
 ]
-dev-repo: "git+https://github.com/mbarbin/bunny.git"
+dev-repo: "git+https://github.com/mbarbin/catch-the-bunny.git"
