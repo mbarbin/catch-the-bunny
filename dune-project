@@ -1,3 +1,51 @@
 (lang dune 3.11)
 
 (name catch-the-bunny)
+
+(generate_opam_files)
+
+(license MIT)
+
+(authors "Mathieu Barbin")
+
+(maintainers "Mathieu Barbin")
+
+(source
+ (github mbarbin/catch-the-bunny))
+
+(documentation "https://mbarbin.github.io/catch-the-bunny/")
+
+(package
+ (name catch-the-bunny)
+ (synopsis "Resolving a small logic puzzle")
+ (description "Resolving a small logic puzzle")
+ (depends
+  (ocaml
+   (>= 5.1))
+  (dune
+   (>= 3.11))
+  (bisect_ppx
+   (and
+    :dev
+    (>= 2.8)))
+  (base
+   (and
+    (>= v0.16)
+    (< v0.17)))
+  (expect_test_helpers_core
+   (and
+    :with-test
+    (>= v0.16)
+    (< v0.17)))
+  (ppx_jane
+   (and
+    (>= v0.16)
+    (< v0.17)))
+  (ppx_js_style
+   (and
+    (>= v0.16)
+    (< v0.17)))
+  (stdio
+   (and
+    (>= v0.16)
+    (< v0.17)))))
