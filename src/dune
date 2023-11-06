@@ -1,7 +1,7 @@
 (library
  (name catch_the_bunny)
  (public_name catch-the-bunny)
- (flags -w +a-4-40-41-42-44-66 -warn-error +a -open Base)
+ (flags :standard -w +a-4-40-41-42-44-45-66 -warn-error +a -open Base)
  (libraries base)
  (instrumentation
   (backend bisect_ppx))
