@@ -11,8 +11,8 @@ bug-reports: "https://github.com/mbarbin/catch-the-bunny/issues"
 depends: [
   "ocaml" {>= "5.1"}
   "dune" {>= "3.11" & >= "3.11"}
-  "bisect_ppx" {dev & >= "2.8"}
   "base" {>= "v0.16" & < "v0.17"}
+  "bisect_ppx" {dev & >= "2.8"}
   "expect_test_helpers_core" {with-test & >= "v0.16" & < "v0.17"}
   "ppx_jane" {>= "v0.16" & < "v0.17"}
   "ppx_js_style" {>= "v0.16" & < "v0.17"}

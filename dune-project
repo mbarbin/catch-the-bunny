@@ -24,14 +24,14 @@
    (>= 5.1))
   (dune
    (>= 3.11))
-  (bisect_ppx
-   (and
-    :dev
-    (>= 2.8)))
   (base
    (and
     (>= v0.16)
     (< v0.17)))
+  (bisect_ppx
+   (and
+    :dev
+    (>= 2.8)))
   (expect_test_helpers_core
    (and
     :with-test
