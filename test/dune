@@ -9,16 +9,13 @@
   -open
   Base
   -open
-  Stdio
-  -open
   Expect_test_helpers_base
   -open
   Catch_the_bunny)
  (libraries
   base
   catch_the_bunny
-  expect_test_helpers_core.expect_test_helpers_base
-  stdio)
+  expect_test_helpers_core.expect_test_helpers_base)
  (inline_tests)
  (preprocess
   (pps ppx_jane ppx_js_style -check-doc-comments)))
