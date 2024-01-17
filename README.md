@@ -1,7 +1,6 @@
 # catch the bunny
 
 [![Actions Status](https://github.com/mbarbin/catch-the-bunny/workflows/ci/badge.svg)](https://github.com/mbarbin/catch-the-bunny/actions/workflows/ci.yml)
-[![Deploy odoc Actions Status](https://github.com/mbarbin/catch-the-bunny/workflows/deploy-odoc/badge.svg)](https://github.com/mbarbin/catch-the-bunny/actions/workflows/deploy-odoc.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mbarbin/catch-the-bunny/badge.svg?branch=main&service=github)](https://coveralls.io/github/mbarbin/catch-the-bunny?branch=main)
 
 The is a toy project that implements a solver for a fun little logic
@@ -120,9 +119,8 @@ it's a fun little project to implement regardless.
 
 ## Code documentation
 
-The tip of the main branch is compiled with odoc and published to
-github pages
-[here](https://mbarbin.github.io/catch-the-bunny/bunny/Bunny/index.html)
+The code documentation of the latest release is built with `odoc` and published
+to `GitHub` pages [here](https://mbarbin.github.io/catch-the-bunny).
 
 The code is executed through test files located in the [test/](test/)
 subdirectory.
