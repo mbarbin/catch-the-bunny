@@ -1,16 +1,9 @@
-## unreleased
-
-### Added
+## 0.0.2 (2024-01-18)
 
 ### Changed
 
 - Generate opam file from `dune-project`.
-
-### Deprecated
-
-### Fixed
-
-### Removed
+- Other internal changes related to the release process.
 
 ## 0.0.1 (2023-11-01)
 
