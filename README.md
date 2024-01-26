@@ -1,7 +1,7 @@
 # catch-the-bunny
 
 [![CI Status](https://github.com/mbarbin/catch-the-bunny/workflows/ci/badge.svg)](https://github.com/mbarbin/catch-the-bunny/actions/workflows/ci.yml)
-[![Coverage Status](https://coveralls.io/repos/github/mbarbin/catch-the-bunny/badge.svg?branch=main&service=github)](https://coveralls.io/github/mbarbin/catch-the-bunny?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/mbarbin/catch-the-bunny/badge.svg?branch=main)](https://coveralls.io/github/mbarbin/catch-the-bunny?branch=main)
 
 The is a toy project that implements a solver for a fun little logic puzzle.
 
