@@ -34,7 +34,9 @@ let create ~size ~code =
   if remainder <> 0 then raise_s [%sexp "code out of bounds", { size : int; code : int }];
   let code' = compute_code ~may_be_located in
   if code <> code'
-  then raise_s [%sexp "code does not round trip", { code : int; code' : int }];
+  then
+    raise_s
+      [%sexp "code does not round trip", { code : int; code' : int }] [@coverage off];
   { code; may_be_located }
 ;;
 

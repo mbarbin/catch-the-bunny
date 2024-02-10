@@ -3,7 +3,9 @@ let%expect_test "code" =
     let status_line = Status_line.create ~size:8 ~code in
     let code' = Status_line.code status_line in
     if code <> code'
-    then raise_s [%sexp "code does not round trip", { code : int; code' : int }]
+    then
+      raise_s
+        [%sexp "code does not round trip", { code : int; code' : int }] [@coverage off]
   done;
   [%expect {||}];
   require_does_raise [%here] (fun () ->
