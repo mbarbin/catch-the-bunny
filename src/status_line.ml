@@ -1,9 +1,19 @@
+module May_be_located = struct
+  type t = bool array
+
+  let sexp_of_t t =
+    Sexp.Atom (String.init (Array.length t) ~f:(fun i -> if t.(i) then '1' else '0'))
+  ;;
+end
+
 type t =
   { code : int
-  ; may_be_located : bool array
+  ; may_be_located : May_be_located.t
   }
-[@@deriving compare, equal, sexp_of]
+[@@deriving sexp_of]
 
+let equal t1 t2 = t1.code = t2.code
+let compare t1 t2 = Int.compare t1.code t2.code
 let code t = t.code
 
 let compute_code ~may_be_located =
