@@ -20,8 +20,18 @@ let compute_code ~may_be_located =
   Array.fold may_be_located ~init:0 ~f:(fun acc j -> (2 * acc) + if j then 1 else 0)
 ;;
 
+let check_code_exn ~size ~code =
+  if code < 0 || code >= 1 lsl size
+  then raise_s [%sexp "code out of bounds", { size : int; code : int }]
+;;
+
+let check_size_exn ~size =
+  if size < 1 then raise_s [%sexp "invalid size, expected >= 1", { size : int }]
+;;
+
 let create ~size ~code =
-  if code < 0 then raise_s [%sexp "invalid negative code", { size : int; code : int }];
+  check_size_exn ~size;
+  check_code_exn ~size ~code;
   let may_be_located = Array.create ~len:size false in
   let rec aux i code =
     if i >= 0 && i < size
@@ -31,7 +41,7 @@ let create ~size ~code =
     else code
   in
   let remainder = aux (size - 1) code in
-  if remainder <> 0 then raise_s [%sexp "code out of bounds", { size : int; code : int }];
+  assert (remainder = 0);
   let code' = compute_code ~may_be_located in
   if code <> code'
   then
@@ -42,12 +52,16 @@ let create ~size ~code =
 
 let size t = Array.length t.may_be_located
 
-let remove t ~index =
+let check_index_exn t ~index =
   let size = size t in
+  if index < 0 || index >= size
+  then raise_s [%sexp "index out of bounds", { size : int; index : int }]
+;;
+
+let remove t ~index =
+  check_index_exn t ~index;
   let may_be_located = Array.copy t.may_be_located in
-  if index >= 0 && index < size
-  then may_be_located.(index) <- false
-  else raise_s [%sexp "index out of bounds", { size : int; index : int }];
+  may_be_located.(index) <- false;
   { code = compute_code ~may_be_located; may_be_located }
 ;;
 

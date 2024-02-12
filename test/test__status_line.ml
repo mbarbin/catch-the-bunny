@@ -7,14 +7,17 @@ let%expect_test "code" =
   [%expect {||}];
   require_does_raise [%here] (fun () ->
     ignore (Status_line.create ~size:(-1) ~code:0 : Status_line.t));
-  [%expect {| (Invalid_argument "Array.create ~len:-1: invalid length") |}];
-  require_does_not_raise [%here] (fun () ->
+  [%expect {| ("invalid size, expected >= 1" ((size -1))) |}];
+  require_does_raise [%here] (fun () ->
     ignore (Status_line.create ~size:0 ~code:0 : Status_line.t));
+  [%expect {| ("invalid size, expected >= 1" ((size 0))) |}];
+  require_does_not_raise [%here] (fun () ->
+    ignore (Status_line.create ~size:1 ~code:0 : Status_line.t));
   [%expect {||}];
   require_does_raise [%here] (fun () ->
     ignore (Status_line.create ~size:1 ~code:(-1) : Status_line.t));
   [%expect {|
-    ("invalid negative code" (
+    ("code out of bounds" (
       (size 1)
       (code -1))) |}];
   require_does_raise [%here] (fun () ->
