@@ -23,3 +23,7 @@ val move : t -> t
 (** If there is only one single column where the bunny may currently be located,
     return that column, and [None] otherwise. *)
 val catch_the_bunny : t -> int option
+
+(** {1 Error helpers} *)
+
+val check_code_does_round_trip_exn : t -> expected:int -> unit

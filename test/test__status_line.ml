@@ -1,10 +1,18 @@
 let%expect_test "code" =
   for code = 0 to 255 do
     let status_line = Status_line.create ~size:8 ~code in
-    let code' = Status_line.code status_line in
-    require_equal [%here] (module Int) code code' ~message:"code does not round trip"
+    Status_line.check_code_does_round_trip_exn status_line ~expected:code
   done;
   [%expect {||}];
+  require_does_raise [%here] (fun () ->
+    Status_line.check_code_does_round_trip_exn
+      (Status_line.create ~size:8 ~code:1)
+      ~expected:0);
+  [%expect
+    {|
+    ("code does not round trip" (
+      (expected 0)
+      (computed 1))) |}];
   require_does_raise [%here] (fun () : Status_line.t ->
     Status_line.create ~size:(-1) ~code:0);
   [%expect {| ("invalid size, expected >= 1" ((size -1))) |}];
