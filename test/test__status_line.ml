@@ -5,23 +5,23 @@ let%expect_test "code" =
     require_equal [%here] (module Int) code code' ~message:"code does not round trip"
   done;
   [%expect {||}];
-  require_does_raise [%here] (fun () ->
-    ignore (Status_line.create ~size:(-1) ~code:0 : Status_line.t));
+  require_does_raise [%here] (fun () : Status_line.t ->
+    Status_line.create ~size:(-1) ~code:0);
   [%expect {| ("invalid size, expected >= 1" ((size -1))) |}];
-  require_does_raise [%here] (fun () ->
-    ignore (Status_line.create ~size:0 ~code:0 : Status_line.t));
+  require_does_raise [%here] (fun () : Status_line.t ->
+    Status_line.create ~size:0 ~code:0);
   [%expect {| ("invalid size, expected >= 1" ((size 0))) |}];
   require_does_not_raise [%here] (fun () ->
     ignore (Status_line.create ~size:1 ~code:0 : Status_line.t));
   [%expect {||}];
-  require_does_raise [%here] (fun () ->
-    ignore (Status_line.create ~size:1 ~code:(-1) : Status_line.t));
+  require_does_raise [%here] (fun () : Status_line.t ->
+    Status_line.create ~size:1 ~code:(-1));
   [%expect {|
     ("code out of bounds" (
       (size 1)
       (code -1))) |}];
-  require_does_raise [%here] (fun () ->
-    ignore (Status_line.create ~size:1 ~code:3 : Status_line.t));
+  require_does_raise [%here] (fun () : Status_line.t ->
+    Status_line.create ~size:1 ~code:3);
   [%expect {|
     ("code out of bounds" (
       (size 1)
@@ -80,14 +80,12 @@ let%expect_test "remove" =
   [%expect {|
     ((code           95)
      (may_be_located 01011111)) |}];
-  require_does_raise [%here] (fun () ->
-    ignore (Status_line.remove t ~index:(-1) : Status_line.t));
+  require_does_raise [%here] (fun () : Status_line.t -> Status_line.remove t ~index:(-1));
   [%expect {|
     ("index out of bounds" (
       (size  8)
       (index -1))) |}];
-  require_does_raise [%here] (fun () ->
-    ignore (Status_line.remove t ~index:8 : Status_line.t));
+  require_does_raise [%here] (fun () : Status_line.t -> Status_line.remove t ~index:8);
   [%expect {|
     ("index out of bounds" (
       (size  8)
