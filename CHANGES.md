@@ -2,6 +2,8 @@
 
 ### Added
 
+- New tests to increase code coverage.
+
 ### Changed
 
 - Upgrade dune to `3.14`.
