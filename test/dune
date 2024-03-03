@@ -9,13 +9,10 @@
   -open
   Base
   -open
-  Expect_test_helpers_base
+  Expect_test_helpers
   -open
   Catch_the_bunny)
- (libraries
-  base
-  catch_the_bunny
-  expect_test_helpers_core.expect_test_helpers_base)
+ (libraries base catch_the_bunny expect-test-helpers)
  (inline_tests)
  (instrumentation
   (backend bisect_ppx))
