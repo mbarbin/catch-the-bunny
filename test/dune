@@ -1,5 +1,6 @@
 (library
  (name catch_the_bunny_test)
+ (public_name catch-the-bunny-tests.catch_the_bunny_test)
  (flags
   :standard
   -w
@@ -9,10 +10,13 @@
   -open
   Base
   -open
-  Expect_test_helpers
+  Expect_test_helpers_base
   -open
   Catch_the_bunny)
- (libraries base catch_the_bunny expect-test-helpers)
+ (libraries
+  base
+  catch_the_bunny
+  expect_test_helpers_core.expect_test_helpers_base)
  (inline_tests)
  (instrumentation
   (backend bisect_ppx))
