@@ -15,6 +15,8 @@
 
 (documentation "https://mbarbin.github.io/catch-the-bunny/")
 
+(implicit_transitive_deps false)
+
 (package
  (name catch-the-bunny)
  (synopsis "Resolving a small logic puzzle")
