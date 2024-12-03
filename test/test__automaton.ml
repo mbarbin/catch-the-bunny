@@ -509,12 +509,14 @@ let%expect_test "edges size 3" =
      (1 ((code 0) (may_be_located 000)))
      (2 ((code 0) (may_be_located 000)))) |}];
   require_does_raise [%here] (fun () -> print_edges ~code:(-1));
-  [%expect {|
+  [%expect
+    {|
     ("code out of bounds" (
       (code   -1)
       (length 8))) |}];
   require_does_raise [%here] (fun () -> print_edges ~code:255);
-  [%expect {|
+  [%expect
+    {|
     ("code out of bounds" (
       (code   255)
       (length 8))) |}];
