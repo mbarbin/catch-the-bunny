@@ -22,7 +22,7 @@
  (synopsis "Resolving a small logic puzzle")
  (depends
   (ocaml
-   (>= 5.2))
+   (>= 5.3))
   (base
    (and
     (>= v0.17)
