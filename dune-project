@@ -63,7 +63,7 @@
  (synopsis "Tests for catch-the-bunny")
  (depends
   (ocaml
-   (>= 5.2))
+   (>= 5.3))
   (ocamlformat
    (and
     :with-dev-setup
