@@ -1,17 +1,21 @@
-## 0.0.7 (unreleased)
+## 0.0.7 (2025-03-14)
 
 ### Added
 
+- Add new ci jobs with more build matrix entries (macos, 5.2).
+
 ### Changed
 
+- Requires `ocaml.5.3.0` (as a test).
+- Enable ocamlformat `parse-docstrings`.
+- Disable implicit transitive dependencies.
+- Upgrade some dependencies (`ocamlformat`, `dune`, `ppxlib`).
 - Split test package
 - Use `expect_test_helpers_core.expect_test_helpers_base`
 
-### Deprecated
-
 ### Fixed
 
-### Removed
+- Add maintainer email (opam lint).
 
 ## 0.0.6 (2024-07-26)
 
