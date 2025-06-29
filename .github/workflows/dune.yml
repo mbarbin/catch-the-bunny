@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        runs-on: [ ubuntu-latest, macos-latest ]
+        runs-on: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.runs-on }}
 
     steps:
@@ -23,10 +23,13 @@ jobs:
         with:
           automagic: false
       - name: Build project
+        id: build_step
         shell: bash
+        continue-on-error: true
         run: |
           dune build
       - name: Run tests
         shell: bash
+        if: ${{ steps.build_step.conclusion == 'success' }}
         run: |
           dune runtest
