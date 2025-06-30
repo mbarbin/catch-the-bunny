@@ -24,7 +24,14 @@ jobs:
         uses: mbarbin/setup-dune@aaee45487d3d2372d8ac3da72d25e42f4d7091be # combined-changes
         with:
           automagic: false
-          install-depexts: true
+          install-depexts: false
+
+      # CR mbarbin: I imported the file in order to debug locally.
+      - name: Install depexts
+        shell: bash
+        run: ${{ github.workspace }}/.github/install-depexts.sh
+        env:
+          RUNNER_OS: ${{ runner.os }}
 
       - name: Build project
         shell: bash
