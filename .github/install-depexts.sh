@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 # This script installs system dependencies (depexts) listed by `dune show depexts`.
 # It is intended to be called from the setup-dune composite action.

@@ -37,7 +37,9 @@ jobs:
       # CR mbarbin: I imported the file in order to debug locally.
       - name: Install depexts
         shell: bash
-        run: ${{ github.workspace }}/.github/install-depexts.sh
+        run: |
+          set -x
+          ${{ github.workspace }}/.github/install-depexts.sh
         env:
           RUNNER_OS: ${{ runner.os }}
 
