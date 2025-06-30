@@ -28,9 +28,6 @@ jobs:
 
       - name: Resolve dependencies
         shell: bash
-        # CR mbarbin: Disabling for now, to test that the install-depexts script
-        # correctly log errors.
-        if: false
         run: |
           dune pkg lock
 
@@ -38,7 +35,6 @@ jobs:
       - name: Install depexts
         shell: bash
         run: |
-          set -x
           ${{ github.workspace }}/.github/install-depexts.sh
         env:
           RUNNER_OS: ${{ runner.os }}
