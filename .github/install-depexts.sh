@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -uo pipefail
+set -euo pipefail
 
 # This script installs system dependencies (depexts) listed by `dune show depexts`.
 # It is intended to be called from the setup-dune composite action.
@@ -8,16 +8,16 @@ echo "[install-depexts] Starting."
 
 : "${RUNNER_OS:?RUNNER_OS must be set}"
 
-DEPEXT_OUTPUT="$(dune show depexts 2>&1)"
-DEPEXT_EXIT_CODE=$?
-
-if [ "$DEPEXT_EXIT_CODE" -ne 0 ]; then
-  echo "$DEPEXT_OUTPUT"
-  echo "[install-depexts] dune show depexts exit code: $DEPEXT_EXIT_CODE"
-  exit "$DEPEXT_EXIT_CODE"
+DEPEXT_TEMPFILE="$(mktemp)"
+if dune show depexts >"$DEPEXT_TEMPFILE" 2>&1; then
+  DEPEXT_LIST="$(cat "$DEPEXT_TEMPFILE")"
+else
+  cat "$DEPEXT_TEMPFILE"
+  echo "[install-depexts] dune show depexts failed"
+  rm -f "$DEPEXT_TEMPFILE"
+  exit 1
 fi
-
-DEPEXT_LIST="$DEPEXT_OUTPUT"
+rm -f "$DEPEXT_TEMPFILE"
 
 echo "[install-depexts] DEPEXT_LIST='$(printf '%s' "$DEPEXT_LIST" | sed ':a;N;$!ba;s/\n/\\n/g')'"
 
