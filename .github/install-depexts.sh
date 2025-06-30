@@ -38,5 +38,5 @@ elif [ "${RUNNER_OS}" = "macOS" ]; then
   xargs -r brew install <<< "$DEPEXT_LIST"
 else
   echo "[install-depexts] Depext installation is not supported on this OS: ${RUNNER_OS}"
-  exit 0
+  exit 1
 fi
