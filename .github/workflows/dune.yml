@@ -42,7 +42,7 @@ jobs:
       - name: Build project
         shell: bash
         run: |
-          dune build
+          dune build catch-the-bunny.install
 
       - name: Save dune cache
         uses: actions/cache/save@v4
