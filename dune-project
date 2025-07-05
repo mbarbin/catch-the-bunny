@@ -15,10 +15,7 @@
 
 (documentation "https://mbarbin.github.io/catch-the-bunny/")
 
-;; CR mbarbin: Setting itd to [false] in an attempt to see if this has to do
-;; with the build issue happening in the CI.
-
-(implicit_transitive_deps true)
+(implicit_transitive_deps false)
 
 (package
  (name catch-the-bunny)
