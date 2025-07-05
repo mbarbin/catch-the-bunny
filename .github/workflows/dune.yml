@@ -26,12 +26,13 @@ jobs:
           automagic: false
           install-depexts: false
 
-      - name: Install gpatch on macOS
+      - name: Install gpatch and add to PATH on macOS
         if: runner.os == 'macOS'
         shell: bash
         run: |
           brew update
           brew install gpatch
+          echo "/opt/homebrew/opt/gpatch/libexec/gnubin" >> $GITHUB_PATH
 
       - name: Resolve dependencies
         shell: bash
