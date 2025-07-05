@@ -26,6 +26,13 @@ jobs:
           automagic: false
           install-depexts: false
 
+      - name: Install gpatch on macOS
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          brew update
+          brew install gpatch
+
       - name: Resolve dependencies
         shell: bash
         run: |
