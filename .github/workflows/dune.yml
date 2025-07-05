@@ -39,6 +39,12 @@ jobs:
       #
       # We should look into the documentation of actions/cache/save next as it
       # would seem I'm not using this quite how it's intended to work.
+      #
+      # mbarbin: I enabled ACTIONS_STEP_DEBUG and saw this error:
+      #
+      # > Failed to reserve cache: Error: Failed to CreateCacheEntry: Received
+      # > non-retryable error: Failed request: (409) Conflict: cache entry with
+      # > the same key, version, and scope already exists
 
       - name: Save dune cache
         uses: actions/cache/save@v4
