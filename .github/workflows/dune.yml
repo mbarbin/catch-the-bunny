@@ -34,8 +34,10 @@ jobs:
           GPATCH_GNUBIN="/opt/homebrew/opt/gpatch/libexec/gnubin"
           brew update
           brew install gpatch
-          echo "::debug::Contents of $GPATCH_GNUBIN:"
-          echo "::debug::$(ls -l $GPATCH_GNUBIN)"
+          if [ "${ACTIONS_STEP_DEBUG:-false}" = "true" ]; then
+            echo "Contents of $GPATCH_GNUBIN:"
+            ls -l "$GPATCH_GNUBIN"
+          fi
           echo "$GPATCH_GNUBIN" >> $GITHUB_PATH
           patch --version
 
