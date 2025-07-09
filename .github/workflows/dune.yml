@@ -30,9 +30,16 @@ jobs:
         if: runner.os == 'macOS'
         shell: bash
         run: |
+          set -e
+          GPATCH_GNUBIN="/opt/homebrew/opt/gpatch/libexec/gnubin"
           brew update
           brew install gpatch
-          echo "/opt/homebrew/opt/gpatch/libexec/gnubin" >> $GITHUB_PATH
+          if [ "${ACTIONS_STEP_DEBUG:-false}" = "true" ]; then
+            echo "Contents of $GPATCH_GNUBIN:"
+            ls -l "$GPATCH_GNUBIN"
+          fi
+          echo "$GPATCH_GNUBIN" >> $GITHUB_PATH
+          patch --version
 
       - name: Resolve dependencies
         shell: bash
