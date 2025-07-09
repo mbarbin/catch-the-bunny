@@ -12,7 +12,7 @@ jobs:
   build:
     strategy:
       matrix:
-        runs-on: [ubuntu-latest, macos-latest]
+        runs-on: [ubuntu-latest, macos-latest, macos-13]
     runs-on: ${{ matrix.runs-on }}
 
     steps:
@@ -31,9 +31,20 @@ jobs:
         shell: bash
         run: |
           set -e
-          GPATCH_GNUBIN="/opt/homebrew/opt/gpatch/libexec/gnubin"
           brew update
           brew install gpatch
+          brew update
+          brew install gpatch
+          # Apple Silicon (macos-latest, macos-14)
+          if [ -d "/opt/homebrew/opt/gpatch/libexec/gnubin" ]; then
+            GPATCH_GNUBIN="/opt/homebrew/opt/gpatch/libexec/gnubin"
+          # Intel (macos-13)
+          elif [ -d "/usr/local/opt/gpatch/libexec/gnubin" ]; then
+            GPATCH_GNUBIN="/usr/local/opt/gpatch/libexec/gnubin"
+          else
+            echo "::error::gpatch gnubin directory not found!"
+            exit 1
+          fi
           DIR_CONTENTS="$(ls -l "$GPATCH_GNUBIN")"
           while IFS= read -r line; do
             echo "::debug::$line"
