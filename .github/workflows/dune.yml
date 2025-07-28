@@ -1,0 +1,71 @@
+name: Build and test with dune-pkg
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "**" # This will match pull requests targeting any branch
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        runs-on: [ubuntu-latest, macos-latest, macos-13]
+    runs-on: ${{ matrix.runs-on }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup dune
+        id: setup-dune
+        uses: mbarbin/setup-dune@aaee45487d3d2372d8ac3da72d25e42f4d7091be # combined-changes
+        with:
+          automagic: false
+          install-depexts: false
+
+      - name: Install gpatch and add to PATH on macOS
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          set -e
+          brew update
+          brew install gpatch
+          GPATCH_PREFIX="$(brew --prefix gpatch)"
+          GPATCH_GNUBIN="$GPATCH_PREFIX/libexec/gnubin"
+          if [ ! -d "$GPATCH_GNUBIN" ]; then
+            echo "::error::gpatch gnubin directory not found!"
+            exit 1
+          fi
+          DIR_CONTENTS="$(ls -l "$GPATCH_GNUBIN")"
+          while IFS= read -r line; do
+            echo "::debug::$line"
+          done <<< "$DIR_CONTENTS"
+          echo "$GPATCH_GNUBIN" >> $GITHUB_PATH
+          patch --version
+
+      - name: Resolve dependencies
+        shell: bash
+        run: |
+          dune pkg lock
+
+      # CR mbarbin: I imported the file in order to debug locally.
+      - name: Install depexts
+        shell: bash
+        run: |
+          ${{ github.workspace }}/.github/install-depexts.sh
+        env:
+          RUNNER_OS: ${{ runner.os }}
+
+      - name: Build project
+        shell: bash
+        run: |
+          dune build catch-the-bunny.install
+
+      - name: Save dune cache
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ steps.setup-dune.outputs.dune-cache-root }}
+          key: ${{ steps.setup-dune.outputs.dune-cache-primary-key }}
