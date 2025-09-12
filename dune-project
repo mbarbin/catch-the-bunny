@@ -19,7 +19,7 @@
 
 (package
  (name catch-the-bunny)
- (synopsis "Resolving a small logic puzzle")
+ (synopsis "Resolving a small logic puzzle to catch a bunny")
  (depends
   (ocaml
    (>= 5.3))
