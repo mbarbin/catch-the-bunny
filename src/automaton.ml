@@ -1,3 +1,9 @@
+(*********************************************************************************)
+(*  catch-the-bunny: Resolving a small logic puzzle to catch a bunny             *)
+(*  SPDX-FileCopyrightText: 2022-2025 Mathieu Barbin <mathieu.barbin@gmail.com>  *)
+(*  SPDX-License-Identifier: MIT                                                 *)
+(*********************************************************************************)
+
 module Vertex = struct
   type t =
     { status_line : Status_line.t

@@ -1,3 +1,9 @@
+(*_********************************************************************************)
+(*_  catch-the-bunny: Resolving a small logic puzzle to catch a bunny             *)
+(*_  SPDX-FileCopyrightText: 2022-2025 Mathieu Barbin <mathieu.barbin@gmail.com>  *)
+(*_  SPDX-License-Identifier: MIT                                                 *)
+(*_********************************************************************************)
+
 (** A status line indicates the columns where the bunny may be located on that
     line. As the game goes on and more information is gathered, we're hoping
     that the set of possible locations will be decreased down to a single

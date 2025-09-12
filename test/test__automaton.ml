@@ -1,3 +1,9 @@
+(*********************************************************************************)
+(*  catch-the-bunny: Resolving a small logic puzzle to catch a bunny             *)
+(*  SPDX-FileCopyrightText: 2022-2025 Mathieu Barbin <mathieu.barbin@gmail.com>  *)
+(*  SPDX-License-Identifier: MIT                                                 *)
+(*********************************************************************************)
+
 let%expect_test "edges size 8" =
   let t = Automaton.create ~size:8 in
   let print_edges ~code =

@@ -1,3 +1,9 @@
+(*********************************************************************************)
+(*  catch-the-bunny: Resolving a small logic puzzle to catch a bunny             *)
+(*  SPDX-FileCopyrightText: 2022-2025 Mathieu Barbin <mathieu.barbin@gmail.com>  *)
+(*  SPDX-License-Identifier: MIT                                                 *)
+(*********************************************************************************)
+
 let%expect_test "code" =
   for code = 0 to 255 do
     let status_line = Status_line.create ~size:8 ~code in

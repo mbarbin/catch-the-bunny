@@ -1,3 +1,9 @@
+(*_********************************************************************************)
+(*_  catch-the-bunny: Resolving a small logic puzzle to catch a bunny             *)
+(*_  SPDX-FileCopyrightText: 2022-2025 Mathieu Barbin <mathieu.barbin@gmail.com>  *)
+(*_  SPDX-License-Identifier: MIT                                                 *)
+(*_********************************************************************************)
+
 (** To solve the game, we create a big automaton that encodes the transitions
     between all possible status lines. Once that automaton is computed, the
     search for a solution boils down to finding a particular path within it :
