@@ -81,7 +81,7 @@
   (ocaml
    (>= 5.3))
   (ocamlformat
-   (= 0.27.0))
+   (= 0.28.1))
   (base
    (>= v0.17))
   (bisect_ppx
