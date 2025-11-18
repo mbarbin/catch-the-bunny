@@ -9,7 +9,11 @@
     that the set of possible locations will be decreased down to a single
     column, so that we can catch the bunny at that location. *)
 
-type t [@@deriving compare, equal, sexp_of]
+type t
+
+val compare : t -> t -> Ordering.t
+val equal : t -> t -> bool
+val to_dyn : t -> Dyn.t
 
 (** Status lines are encoded with an int between 0 and (2**size - 1). *)
 val code : t -> int
@@ -28,7 +32,11 @@ val move : t -> t
 
 (** If there is only one single column where the bunny may currently be located,
     return that column, and [None] otherwise. *)
-val catch_the_bunny : t -> int option
+val may_catch_the_bunny : t -> int option
+
+(** If the index is strictly the only column where the bunny may currently be
+    located, return [true], and [false] otherwise. *)
+val bunny_was_caught : t -> index:int -> bool
 
 (** {1 Error helpers} *)
 

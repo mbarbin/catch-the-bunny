@@ -24,12 +24,21 @@ type t
 (** Compute the complete automaton with its vertices and edges for a given size. *)
 val create : size:int -> t
 
+module Edge : sig
+  type t =
+    { target : int
+    ; label : Status_line.t
+    }
+
+  val to_dyn : t -> Dyn.t
+end
+
 (** Returns the edges that are originating from the vertex with the given code.
     For each edge we return its label along with its targeting vertex. *)
-val edges : t -> code:int -> (int * Status_line.t) list
+val edges : t -> code:int -> Edge.t list
 
 (** Return the edges that are targeting the vertex with the given code. *)
-val reverse_edges : t -> code:int -> (int * Status_line.t) list
+val reverse_edges : t -> code:int -> Edge.t list
 
 module Step : sig
   (** Human readable steps that are happening as the game goes on. *)
@@ -38,7 +47,8 @@ module Step : sig
     | Status_line of Status_line.t
     | Bunny_moved of Status_line.t
     | Bunny_was_caught
-  [@@deriving sexp_of]
+
+  val to_dyn : t -> Dyn.t
 end
 
 (** Test a candidate solution, and returns its human readable execution trace.
@@ -51,7 +61,8 @@ module Solution : sig
     { length : int
     ; sequence : int list
     }
-  [@@deriving sexp_of]
+
+  val to_dyn : t -> Dyn.t
 end
 
 (** Find a few sequences that catch the bunny, ordered by increasing number of
