@@ -40,8 +40,8 @@
    (>= 5.3))
   (catch-the-bunny
    (= :version))
-  (ppx_expect_nobase
-   (>= v0.17.3))
+  (ppx_expect
+   (>= v0.17))
   (ppxlib
    (>= 0.35.0))))
 
@@ -60,8 +60,8 @@
    (= :version))
   (catch-the-bunny-tests
    (= :version))
-  (ppx_expect_nobase
-   (>= v0.17.3))
+  (ppx_expect
+   (>= v0.17))
   (ppx_js_style
    (>= v0.17))
   (ppxlib
