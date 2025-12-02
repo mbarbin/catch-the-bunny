@@ -7,12 +7,23 @@
 module May_be_located = struct
   type t = bool array
 
-  let sexp_of_t t =
-    Sexp.Atom (String.init (Array.length t) ~f:(fun i -> if t.(i) then '1' else '0'))
+  let to_dyn t =
+    Dyn.string (String.init (Array.length t) ~f:(fun i -> if t.(i) then '1' else '0'))
   ;;
 
   let compute_code (t : t) =
     Array.fold t ~init:0 ~f:(fun acc j -> (2 * acc) + if j then 1 else 0)
+  ;;
+
+  let is_singleton t =
+    let exception Return in
+    match
+      Array.fold t ~init:0 ~f:(fun acc b ->
+        if b then if acc > 0 then raise_notrace Return else 1 else acc)
+    with
+    | 1 -> true
+    | _ -> false
+    | exception Return -> false
   ;;
 end
 
@@ -20,7 +31,11 @@ type t =
   { code : int
   ; may_be_located : May_be_located.t
   }
-[@@deriving sexp_of]
+
+let to_dyn { code; may_be_located } =
+  Dyn.record
+    [ "code", Dyn.int code; "may_be_located", May_be_located.to_dyn may_be_located ]
+;;
 
 let equal t1 t2 = t1.code = t2.code
 let compare t1 t2 = Int.compare t1.code t2.code
@@ -28,17 +43,24 @@ let code t = t.code
 
 let check_code_exn ~size ~code =
   if code < 0 || code >= 1 lsl size
-  then raise_s [%sexp "code out of bounds", { size : int; code : int }]
+  then
+    Code_error.raise
+      "Code out of bounds."
+      [ "size", size |> Dyn.int; "code", code |> Dyn.int ]
 ;;
 
 let check_size_exn ~size =
-  if size < 1 then raise_s [%sexp "invalid size, expected >= 1", { size : int }]
+  if size < 1
+  then Code_error.raise "Invalid size, expected [>= 1]." [ "size", size |> Dyn.int ]
 ;;
 
 let check_code_does_round_trip_exn t ~expected =
   let computed = May_be_located.compute_code t.may_be_located in
   if expected <> computed
-  then raise_s [%sexp "code does not round trip", { expected : int; computed : int }]
+  then
+    Code_error.raise
+      "Code does not round trip."
+      [ "expected", expected |> Dyn.int; "computed", computed |> Dyn.int ]
 ;;
 
 let create ~size ~code =
@@ -48,7 +70,7 @@ let create ~size ~code =
   let rec aux i code =
     if i >= 0 && i < size
     then (
-      may_be_located.(i) <- code % 2 = 1;
+      may_be_located.(i) <- code mod 2 = 1;
       aux (i - 1) (code / 2))
     else code
   in
@@ -64,7 +86,10 @@ let size t = Array.length t.may_be_located
 let check_index_exn t ~index =
   let size = size t in
   if index < 0 || index >= size
-  then raise_s [%sexp "index out of bounds", { size : int; index : int }]
+  then
+    Code_error.raise
+      "Index out of bounds."
+      [ "size", size |> Dyn.int; "index", index |> Dyn.int ]
 ;;
 
 let remove t ~index =
@@ -87,8 +112,13 @@ let move t =
   { code = May_be_located.compute_code may_be_located; may_be_located }
 ;;
 
-let catch_the_bunny t =
-  if 1 = Array.count t.may_be_located ~f:Fn.id
+let may_catch_the_bunny t =
+  if May_be_located.is_singleton t.may_be_located
   then Array.find_mapi t.may_be_located ~f:(fun i b -> Option.some_if b i)
   else None
+;;
+
+let bunny_was_caught t ~index =
+  check_index_exn t ~index;
+  t.may_be_located.(index) && May_be_located.is_singleton t.may_be_located
 ;;

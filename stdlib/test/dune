@@ -1,6 +1,6 @@
 (library
- (name catch_the_bunny)
- (public_name catch-the-bunny)
+ (name catch_the_bunny_stdlib_test)
+ (public_name catch-the-bunny-tests.catch_the_bunny_stdlib_test)
  (flags
   :standard
   -w
@@ -9,9 +9,11 @@
   +a
   -open
   Catch_the_bunny_stdlib)
- (libraries bitv catch_the_bunny_stdlib)
+ (libraries catch_the_bunny_stdlib)
+ (inline_tests)
  (instrumentation
   (backend bisect_ppx))
  (lint
   (pps ppx_js_style -allow-let-operators -check-doc-comments))
- (preprocess no_preprocessing))
+ (preprocess
+  (pps ppx_expect)))
