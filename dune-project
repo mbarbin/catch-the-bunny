@@ -28,7 +28,9 @@
   (dyn
    (>= 3.20))
   (ordering
-   (>= 3.20))))
+   (>= 3.20))
+  (pp
+   (>= 2.0.0))))
 
 (package
  (name catch-the-bunny-tests)

@@ -69,7 +69,7 @@ let check_code_exn t ~code =
   let length = Array.length t.vertices in
   if code < 0 || code >= length
   then
-    Dyn.raise
+    Code_error.raise
       "Code out of bounds."
       [ "code", code |> Dyn.int; "length", length |> Dyn.int ]
 ;;

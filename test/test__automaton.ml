@@ -8,7 +8,7 @@ let%expect_test "edges size 8" =
   let t = Automaton.create ~size:8 in
   let print_edges ~code =
     let edges = Automaton.edges t ~code in
-    Dyn.print (edges |> Dyn.list Automaton.Edge.to_dyn)
+    print_dyn (edges |> Dyn.list Automaton.Edge.to_dyn)
   in
   print_edges ~code:255;
   [%expect
@@ -55,7 +55,7 @@ let%expect_test "edges size 8" =
 let%expect_test "sequence size 8" =
   let t = Automaton.create ~size:8 in
   let print_sequence sequence =
-    Dyn.print (Automaton.execute_sequence t ~sequence |> Dyn.list Automaton.Step.to_dyn)
+    print_dyn (Automaton.execute_sequence t ~sequence |> Dyn.list Automaton.Step.to_dyn)
   in
   print_sequence [ 1; 2; 3; 4; 5; 6; 6; 5; 4; 3; 2; 1 ];
   [%expect
@@ -104,7 +104,7 @@ let%expect_test "sequence size 8" =
 let%expect_test "solve size 8" =
   let t = Automaton.create ~size:8 in
   let solutions = Automaton.catch_the_bunny t in
-  Dyn.print (solutions |> Dyn.list Automaton.Solution.to_dyn);
+  print_dyn (solutions |> Dyn.list Automaton.Solution.to_dyn);
   [%expect
     {|
     [ { length = 12; sequence = [ 1; 2; 3; 4; 5; 6; 6; 5; 4; 3; 2; 1 ] }
@@ -206,11 +206,11 @@ let%expect_test "edges size 6" =
   let t = Automaton.create ~size:6 in
   let print_edges ~code =
     let edges = Automaton.edges t ~code in
-    Dyn.print (edges |> Dyn.list Automaton.Edge.to_dyn)
+    print_dyn (edges |> Dyn.list Automaton.Edge.to_dyn)
   in
   let print_reverse_edges ~code =
     let reverse_edges = Automaton.reverse_edges t ~code in
-    Dyn.print (reverse_edges |> Dyn.list Automaton.Edge.to_dyn)
+    print_dyn (reverse_edges |> Dyn.list Automaton.Edge.to_dyn)
   in
   print_edges ~code:63;
   [%expect
@@ -285,7 +285,7 @@ let%expect_test "edges size 6" =
 let%expect_test "solve size 6" =
   let t = Automaton.create ~size:6 in
   let solutions = Automaton.catch_the_bunny t in
-  Dyn.print (solutions |> Dyn.list Automaton.Solution.to_dyn);
+  print_dyn (solutions |> Dyn.list Automaton.Solution.to_dyn);
   [%expect
     {|
     [ { length = 8; sequence = [ 1; 2; 3; 4; 4; 3; 2; 1 ] }
@@ -488,7 +488,7 @@ let%expect_test "solve size 6" =
 let%expect_test "sequence size 6" =
   let t = Automaton.create ~size:6 in
   let print_sequence sequence =
-    Dyn.print (Automaton.execute_sequence t ~sequence |> Dyn.list Automaton.Step.to_dyn)
+    print_dyn (Automaton.execute_sequence t ~sequence |> Dyn.list Automaton.Step.to_dyn)
   in
   print_sequence [ 1; 2; 3; 4; 4; 3; 2; 1 ];
   [%expect
@@ -526,7 +526,7 @@ let%expect_test "edges size 3" =
   let t = Automaton.create ~size:3 in
   let print_edges ~code =
     let edges = Automaton.edges t ~code in
-    Dyn.print (edges |> Dyn.list Automaton.Edge.to_dyn)
+    print_dyn (edges |> Dyn.list Automaton.Edge.to_dyn)
   in
   print_edges ~code:0;
   [%expect
@@ -537,16 +537,8 @@ let%expect_test "edges size 3" =
     ]
     |}];
   require_does_raise (fun () -> print_edges ~code:(-1));
-  [%expect
-    {|
-    Code out of bounds.
-    { code = -1; length = 8 }
-    |}];
+  [%expect {| ("Code out of bounds.", { code = -1; length = 8 }) |}];
   require_does_raise (fun () -> print_edges ~code:255);
-  [%expect
-    {|
-    Code out of bounds.
-    { code = 255; length = 8 }
-    |}];
+  [%expect {| ("Code out of bounds.", { code = 255; length = 8 }) |}];
   ()
 ;;

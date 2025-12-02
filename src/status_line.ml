@@ -44,18 +44,21 @@ let code t = t.code
 let check_code_exn ~size ~code =
   if code < 0 || code >= 1 lsl size
   then
-    Dyn.raise "Code out of bounds." [ "size", size |> Dyn.int; "code", code |> Dyn.int ]
+    Code_error.raise
+      "Code out of bounds."
+      [ "size", size |> Dyn.int; "code", code |> Dyn.int ]
 ;;
 
 let check_size_exn ~size =
-  if size < 1 then Dyn.raise "Invalid size, expected [>= 1]." [ "size", size |> Dyn.int ]
+  if size < 1
+  then Code_error.raise "Invalid size, expected [>= 1]." [ "size", size |> Dyn.int ]
 ;;
 
 let check_code_does_round_trip_exn t ~expected =
   let computed = May_be_located.compute_code t.may_be_located in
   if expected <> computed
   then
-    Dyn.raise
+    Code_error.raise
       "Code does not round trip."
       [ "expected", expected |> Dyn.int; "computed", computed |> Dyn.int ]
 ;;
@@ -84,7 +87,7 @@ let check_index_exn t ~index =
   let size = size t in
   if index < 0 || index >= size
   then
-    Dyn.raise
+    Code_error.raise
       "Index out of bounds."
       [ "size", size |> Dyn.int; "index", index |> Dyn.int ]
 ;;

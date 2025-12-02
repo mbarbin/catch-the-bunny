@@ -13,6 +13,7 @@ depends: [
   "bitv" {>= "2.1"}
   "dyn" {>= "3.20"}
   "ordering" {>= "3.20"}
+  "pp" {>= "2.0.0"}
   "odoc" {with-doc}
 ]
 build: [

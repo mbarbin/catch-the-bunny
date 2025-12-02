@@ -4,8 +4,12 @@
 (*  SPDX-License-Identifier: MIT                                                 *)
 (*********************************************************************************)
 
-module Dyn = Dyn0
+module Code_error = Code_error
+module Dyn = Dyn
 module Ordering = Ordering
+
+let print pp = Format.printf "%a@." Pp.to_fmt pp
+let print_dyn dyn = print (Dyn.pp dyn)
 
 module Comparable = struct
   module type S = sig
@@ -60,7 +64,7 @@ end
 
 let require_does_raise f =
   match f () with
-  | _ -> Dyn.raise "Did not raise." []
+  | _ -> Code_error.raise "Did not raise." []
   | exception e -> print_endline (Printexc.to_string e)
 ;;
 
@@ -80,5 +84,8 @@ let require_equal
       (v2 : a)
   =
   if not (M.equal v1 v2)
-  then Dyn.raise "Values are not equal." [ "v1", v1 |> M.to_dyn; "v2", v2 |> M.to_dyn ]
+  then
+    Code_error.raise
+      "Values are not equal."
+      [ "v1", v1 |> M.to_dyn; "v2", v2 |> M.to_dyn ]
 ;;
