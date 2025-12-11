@@ -1,6 +1,6 @@
 # List of directories for headache.sh
 # Add new directories below. Lines starting with '#' are ignored.
-stdlib/src
-stdlib/test
-src
-test
+pkg/catch-the-bunny
+pkg/catch-the-bunny/stdlib
+test/catch-the-bunny
+test/catch-the-bunny/stdlib
