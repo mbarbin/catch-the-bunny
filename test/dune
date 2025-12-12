@@ -1,6 +1,6 @@
 (library
- (name catch_the_bunny_stdlib_test)
- (public_name catch-the-bunny-tests.catch_the_bunny_stdlib_test)
+ (name catch_the_bunny_test)
+ (package catch-the-bunny-tests)
  (flags
   :standard
   -w
@@ -8,8 +8,10 @@
   -warn-error
   +a
   -open
-  Catch_the_bunny_stdlib)
- (libraries catch_the_bunny_stdlib)
+  Catch_the_bunny_stdlib
+  -open
+  Catch_the_bunny)
+ (libraries catch_the_bunny catch_the_bunny_stdlib)
  (inline_tests)
  (instrumentation
   (backend bisect_ppx))
