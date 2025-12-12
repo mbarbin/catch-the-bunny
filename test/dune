@@ -1,6 +1,6 @@
 (library
  (name catch_the_bunny_test)
- (public_name catch-the-bunny-tests.catch_the_bunny_test)
+ (package catch-the-bunny-tests)
  (flags
   :standard
   -w
