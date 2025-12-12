@@ -14,7 +14,8 @@
    (enforce
     (dune
      (library
-      (and (not (has_field public_name))
+      (and
+       (not (has_field public_name))
        (name (is_suffix _test)))))))))
 
 ;; Configure the ppx_js_style linter
@@ -28,13 +29,11 @@
       (flag
        (name -allow-let-operators)
        (param none)
-       (applies_to
-        (pp ppx_js_style)))
+       (applies_to (pp ppx_js_style)))
       (flag
        (name -check-doc-comments)
        (param none)
-       (applies_to
-        (pp ppx_js_style)))))))))
+       (applies_to (pp ppx_js_style)))))))))
 
 ;; No preprocessing
 (rule
