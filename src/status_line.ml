@@ -16,14 +16,14 @@ module May_be_located = struct
   ;;
 
   let is_singleton t =
-    let exception Return in
+    let exception Not_a_singleton in
     match
       Array.fold t ~init:0 ~f:(fun acc b ->
-        if b then if acc > 0 then raise_notrace Return else 1 else acc)
+        if b then if acc > 0 then raise_notrace Not_a_singleton else 1 else acc)
     with
     | 1 -> true
     | _ -> false
-    | exception Return -> false
+    | exception Not_a_singleton -> false
   ;;
 end
 
