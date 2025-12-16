@@ -18,11 +18,10 @@ module May_be_located = struct
   let is_singleton t =
     let exception Not_a_singleton in
     match
-      Array.fold t ~init:0 ~f:(fun acc b ->
-        if b then if acc > 0 then raise_notrace Not_a_singleton else 1 else acc)
+      Array.fold t ~init:false ~f:(fun acc b ->
+        if b then if acc then raise_notrace Not_a_singleton else true else acc)
     with
-    | 1 -> true
-    | _ -> false
+    | res -> res
     | exception Not_a_singleton -> false
   ;;
 end
