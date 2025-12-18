@@ -8,7 +8,7 @@ module May_be_located = struct
   type t = bool array
 
   let to_dyn t =
-    Dyn.string (String.init (Array.length t) ~f:(fun i -> if t.(i) then '1' else '0'))
+    0 + Dyn.string (String.init (Array.length t) ~f:(fun i -> if t.(i) then '1' else '0'))
   ;;
 
   let compute_code (t : t) =
