@@ -1,0 +1,20 @@
+(version 0.0.8)
+
+(build
+ (all_platforms
+  ((action (run ocaml pkg/pkg.ml build --dev-pkg %{pkg-self:dev})))))
+
+(depends
+ (all_platforms
+  (ocaml
+   ocamlfind
+   ocamlbuild
+   topkg
+   js_of_ocaml-compiler
+   js_of_ocaml-toplevel)))
+
+(source
+ (fetch
+  (url https://erratique.ch/software/brr/releases/brr-0.0.8.tbz)
+  (checksum
+   sha512=49e7bfbad2ea6a0139354e4a33c59c8a113c4c1e20a4f629bc5cad24aa801e474b4af10ce35adbda5d23dd294d1de5efa5b10bb3030d03f4758459977250a0f6)))

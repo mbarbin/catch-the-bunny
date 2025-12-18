@@ -1,0 +1,17 @@
+(version 2.1)
+
+(build
+ (all_platforms
+  ((action
+    (progn
+     (when %{pkg-self:dev} (run dune subst))
+     (run dune build -p %{pkg-self:name} -j %{jobs}))))))
+
+(depends
+ (all_platforms
+  (ocaml dune)))
+
+(source
+ (fetch
+  (url https://github.com/backtracking/bitv/archive/refs/tags/2.1.tar.gz)
+  (checksum md5=03cac56cec6a26321bad06e519cc3847)))
