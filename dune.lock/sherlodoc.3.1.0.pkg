@@ -1,0 +1,32 @@
+(version 3.1.0)
+
+(build
+ (all_platforms
+  ((action
+    (progn
+     (when %{pkg-self:dev} (run dune subst))
+     (run dune build -p %{pkg-self:name} -j %{jobs} @install))))))
+
+(depends
+ (all_platforms
+  (dune
+   ocaml
+   odoc
+   base64
+   bigstringaf
+   js_of_ocaml
+   brr
+   cmdliner
+   decompress
+   fpath
+   lwt
+   menhir
+   ppx_blob
+   tyxml
+   result)))
+
+(source
+ (fetch
+  (url https://github.com/ocaml/odoc/releases/download/3.1.0/odoc-3.1.0.tbz)
+  (checksum
+   sha256=355b3cfff4934903cbaed8b51ce35e333e8609932d230294200a9f2d42ffa914)))
