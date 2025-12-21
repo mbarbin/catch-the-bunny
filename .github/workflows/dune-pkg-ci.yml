@@ -52,5 +52,10 @@ jobs:
       - name: Run tests
         run: dune runtest
 
+      # Before checking for uncommitted changes we need to restore changes made
+      # to the dune files.
+      - name: Restore dune files
+        run: git restore dune-project dune-workspace
+
       - name: Check for uncommitted changes
         run: git diff --exit-code
