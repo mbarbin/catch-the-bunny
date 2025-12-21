@@ -54,7 +54,7 @@ jobs:
       - name: Setup Dune
         uses: mbarbin/setup-dune@fd640f52b2a84d68cd4867cb5972247b70630d1a # repkg
         with:
-          steps: install-dune lazy-update-depexts install-gpatch install-depexts
+          steps: install-dune enable-pkg lazy-update-depexts install-gpatch install-depexts
 
       - name: Lock dependencies
         run: dune pkg lock -p catch-the-bunny,catch-the-bunny-tests
