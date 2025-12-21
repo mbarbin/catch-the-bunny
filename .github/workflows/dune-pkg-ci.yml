@@ -1,0 +1,59 @@
+# Main CI workflow using setup-dune (dune package management).
+# This workflow is intended to eventually replace ci.yml.
+#
+# Since setup-dune doesn't support setting the ocaml-version directly, we:
+# 1. Substitute the ocaml constraint in dune-workspace using the matrix variable
+# 2. Add the ocaml-version to dune-project to differentiate cache keys per version
+
+name: dune-pkg-ci
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - "**"
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+        ocaml-version:
+          - "5.4.0"
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Substitute ocaml-version in dune-workspace
+        run: |
+          sed -i.bak 's/(ocaml (= [0-9.]*))/(ocaml (= ${{ matrix.ocaml-version }}))/' dune-workspace
+          cat dune-workspace
+
+      - name: Add ocaml-version to dune-project for cache key differentiation
+        run: |
+          echo "" >> dune-project
+          echo "; ocaml-version: ${{ matrix.ocaml-version }}" >> dune-project
+
+      - name: Setup Dune
+        uses: mbarbin/setup-dune@fd640f52b2a84d68cd4867cb5972247b70630d1a # repkg
+        with:
+          steps: install-dune lazy-update-depexts install-gpatch install-depexts
+
+      - name: Lock dependencies
+        run: dune pkg lock
+
+      - name: Build
+        run: dune build @all @lint @fmt
+
+      - name: Run tests
+        run: dune runtest
+
+      - name: Check for uncommitted changes
+        run: git diff --exit-code
