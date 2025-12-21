@@ -56,9 +56,6 @@ jobs:
         with:
           steps: install-dune enable-pkg lazy-update-depexts install-gpatch install-depexts
 
-      - name: Lock dependencies
-        run: dune pkg lock -p catch-the-bunny,catch-the-bunny-tests
-
       - name: Build
         run: dune build catch-the-bunny.install catch-the-bunny-tests.install
 
