@@ -59,5 +59,8 @@ jobs:
       - name: Lock dependencies
         run: dune pkg lock -p catch-the-bunny,catch-the-bunny-tests
 
-      - name: Build & Run tests
-        run: dune build @all @runtest -p catch-the-bunny,catch-the-bunny-tests
+      - name: Build
+        run: dune build catch-the-bunny.install catch-the-bunny-tests.install
+
+      - name: Run tests
+        run: dune build @runtest -p catch-the-bunny,catch-the-bunny-tests
