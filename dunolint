@@ -18,8 +18,13 @@
     (dune
      (library
       (and
-       (not (has_field public_name))
-       (name (is_suffix _test)))))))))
+       (not
+        (has_field public_name))
+       (has_field inline_tests)
+       (package
+        (equals catch-the-bunny-tests))
+       (name
+        (is_suffix _test)))))))))
 
 ;; Configure the ppx_js_style linter
 
