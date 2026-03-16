@@ -4,4 +4,8 @@
 (*  SPDX-License-Identifier: MIT                                                 *)
 (*********************************************************************************)
 
-include Stdlib0
+include Stdlib.ArrayLabels
+
+let create ~len a = make len a
+let iter t ~f = iter ~f t
+let fold t ~init ~f = fold_left t ~init ~f

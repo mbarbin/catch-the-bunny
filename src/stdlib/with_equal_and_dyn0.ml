@@ -4,4 +4,9 @@
 (*  SPDX-License-Identifier: MIT                                                 *)
 (*********************************************************************************)
 
-include Stdlib0
+module type S = sig
+  type t
+
+  val equal : t -> t -> bool
+  val to_dyn : t -> Dyn.t
+end
