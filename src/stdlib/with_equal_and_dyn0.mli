@@ -4,8 +4,9 @@
 (*_  SPDX-License-Identifier: MIT                                                 *)
 (*_********************************************************************************)
 
-(** Extending [Stdlib] for use in the project. *)
+module type S = sig
+  type t
 
-include module type of struct
-  include Stdlib0
+  val equal : t -> t -> bool
+  val to_dyn : t -> Dyn.t
 end

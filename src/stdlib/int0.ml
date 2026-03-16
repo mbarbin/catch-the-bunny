@@ -4,4 +4,7 @@
 (*  SPDX-License-Identifier: MIT                                                 *)
 (*********************************************************************************)
 
-include Stdlib0
+include Stdlib.Int
+
+let compare a b = Ordering.of_int (compare a b)
+let to_dyn = Dyn.int

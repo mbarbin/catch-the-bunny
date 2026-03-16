@@ -4,8 +4,12 @@
 (*_  SPDX-License-Identifier: MIT                                                 *)
 (*_********************************************************************************)
 
-(** Extending [Stdlib] for use in the project. *)
-
 include module type of struct
-  include Stdlib0
+  include Stdlib.ListLabels
 end
+
+val compare : (module Comparable0.S with type t = 'a) -> 'a t -> 'a t -> Ordering.t
+val find_exn : 'a t -> f:('a -> bool) -> 'a
+val init : int -> f:(int -> 'a) -> 'a t
+val iter : 'a t -> f:('a -> unit) -> unit
+val sort : (module Comparable0.S with type t = 'a) -> 'a t -> 'a t
