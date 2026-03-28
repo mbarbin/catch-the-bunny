@@ -31,6 +31,8 @@ jobs:
 
       - name: Setup Dune
         uses: mbarbin/setup-dune@8fbf3eb642db050fb36f1602dfa9fde558084a8a # v2.0.0+patch-6
+        env:
+          GH_TOKEN: ${{ github.token }}
         with:
           version: "3.22.0"
           workspace: ${{ env.DUNE_WORKSPACE }}
