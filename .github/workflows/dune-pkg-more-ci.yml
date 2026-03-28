@@ -48,7 +48,7 @@ jobs:
           echo "PACKAGES=catch-the-bunny,catch-the-bunny-tests" >> "$GITHUB_ENV"
 
       - name: Setup Dune
-        uses: mbarbin/setup-dune@ae2985bcdedc6fb24e5743d6f9dace9cf262b41c # v2.0.0+patch-4
+        uses: mbarbin/setup-dune@8fbf3eb642db050fb36f1602dfa9fde558084a8a # v2.0.0+patch-6
         with:
           version: "3.22.0"
           workspace: ${{ env.DUNE_WORKSPACE }}
