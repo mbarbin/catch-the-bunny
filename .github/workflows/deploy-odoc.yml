@@ -38,6 +38,7 @@ jobs:
           workspace: ${{ env.DUNE_WORKSPACE }}
           cache-prefix: "main-ci-${{ env.OCAML_VERSION }}"
           cache-readonly: true
+          dune-digest: "sha256:33ca9308b48d9f5e90ee34f5b1045b53df6b5780a188556dab72af53621b5fba"
           steps: install-dune enable-pkg lazy-update-depexts install-gpatch install-depexts
 
       - name: Build Odoc Pages

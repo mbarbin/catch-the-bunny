@@ -44,6 +44,7 @@ jobs:
           workspace: ${{ env.DUNE_WORKSPACE }}
           cache-prefix: "main-ci-${{ matrix.ocaml-version }}"
           cache-readonly: ${{ github.ref != 'refs/heads/main' }}
+          dune-digest: "sha256:33ca9308b48d9f5e90ee34f5b1045b53df6b5780a188556dab72af53621b5fba"
           steps: install-dune enable-pkg lazy-update-depexts install-gpatch install-depexts
 
       - name: Build and Run tests
