@@ -99,30 +99,30 @@ module Step = struct
   ;;
 end
 
+let[@tail_mod_cons] rec execute_sequence_aux t code sequence : Step.t list =
+  match sequence with
+  | [] -> []
+  | hd :: tl ->
+    let status_line = t.vertices.(code).status_line in
+    if Status_line.bunny_was_caught status_line ~index:hd
+    then [ Open_box hd; Bunny_was_caught ]
+    else (
+      let updated_status_line = Status_line.remove status_line ~index:hd in
+      let { Edge.target = _; label = bunny_moved } =
+        List.find_exn t.vertices.(code).edges ~f:(fun { Edge.target = i; _ } -> i = hd)
+      in
+      (* Coverage is off in the recursive part of the expression because the
+         instrumentation breaks [@tail_mod_cons], triggering warning 71. *)
+      Open_box hd
+      :: Status_line updated_status_line
+      :: Bunny_moved bunny_moved
+      :: (execute_sequence_aux t (Status_line.code bunny_moved) tl [@coverage off]))
+;;
+
 let execute_sequence t ~sequence =
   let max_code = Array.length t.vertices - 1 in
   let all = t.vertices.(max_code).status_line in
-  let rec aux acc code = function
-    | [] -> List.rev acc
-    | hd :: tl ->
-      let status_line = t.vertices.(code).status_line in
-      if Status_line.bunny_was_caught status_line ~index:hd
-      then aux Step.(Bunny_was_caught :: Open_box hd :: acc) code []
-      else (
-        let updated_status_line = Status_line.remove status_line ~index:hd in
-        let { Edge.target = _; label = bunny_moved } =
-          List.find_exn t.vertices.(code).edges ~f:(fun { Edge.target = i; _ } -> i = hd)
-        in
-        aux
-          Step.(
-            Bunny_moved bunny_moved
-            :: Status_line updated_status_line
-            :: Open_box hd
-            :: acc)
-          (Status_line.code bunny_moved)
-          tl)
-  in
-  aux [ Status_line all ] max_code sequence
+  Step.Status_line all :: execute_sequence_aux t max_code sequence
 ;;
 
 module Solution = struct
