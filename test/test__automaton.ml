@@ -522,6 +522,29 @@ let%expect_test "sequence size 6" =
   ()
 ;;
 
+let%expect_test "incomplete sequence size 6" =
+  let t = Automaton.create ~size:6 in
+  let print_sequence sequence =
+    print_dyn (Automaton.execute_sequence t ~sequence |> Dyn.list Automaton.Step.to_dyn)
+  in
+  print_sequence [ 1; 2; 3 ];
+  [%expect
+    {|
+    [ Status_line { code = 63; may_be_located = "111111" }
+    ; Open_box 1
+    ; Status_line { code = 47; may_be_located = "101111" }
+    ; Bunny_moved { code = 31; may_be_located = "011111" }
+    ; Open_box 2
+    ; Status_line { code = 23; may_be_located = "010111" }
+    ; Bunny_moved { code = 47; may_be_located = "101111" }
+    ; Open_box 3
+    ; Status_line { code = 43; may_be_located = "101011" }
+    ; Bunny_moved { code = 23; may_be_located = "010111" }
+    ]
+    |}];
+  ()
+;;
+
 let%expect_test "edges size 3" =
   let t = Automaton.create ~size:3 in
   let print_edges ~code =
