@@ -30,7 +30,7 @@ jobs:
           echo "DUNE_WORKSPACE=$PWD/dune-workspace-${{ env.OCAML_VERSION }}" >> "$GITHUB_ENV"
 
       - name: Setup Dune
-        uses: mbarbin/setup-dune@8fbf3eb642db050fb36f1602dfa9fde558084a8a # v2.0.0+patch-6
+        uses: mbarbin/setup-dune@03ede0220d3fe665f250727d8e21b7c0f9517f3b # v2.0.0+patch-7
         env:
           GH_TOKEN: ${{ github.token }}
         with:
